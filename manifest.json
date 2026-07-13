@@ -1,7 +1,7 @@
 {
-    "name": "Anil Rijal - Creative Developer",
+    "name": "Anil Rijal - Django Developer",
     "short_name": "Anil Rijal",
-    "description": "CSIT Student | Graphic Designer | Aspiring Web & App Developer from Nepal",
+    "description": "Django Developer | Python Backend | REST APIs & Scalable Web Applications from Nepal",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
@@ -36,7 +36,7 @@
         {
             "name": "View Work",
             "short_name": "Work",
-            "description": "View my projects in web, app, and game development",
+            "description": "View my Django projects and backend work",
             "url": "/#work",
             "icons": [
                 {

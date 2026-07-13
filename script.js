@@ -376,13 +376,13 @@ document.addEventListener('keydown', (e) => {
 // Preload critical images
 function preloadImages() {
     const imageUrls = [
+        'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
         'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&h=400&fit=crop',
+        'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop',
         'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop'
+        'images/profile-photo.jpg'
     ];
-    
+
     imageUrls.forEach(url => {
         const img = new Image();
         img.src = url;
@@ -395,9 +395,20 @@ preloadImages();
 // Service Worker Registration (for PWA capabilities)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('./sw.js')
             .then(registration => {
-                console.log('SW registered: ', registration);
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    if (!newWorker) return;
+
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+                            window.location.reload();
+                        }
+                    });
+                });
+
+                registration.update();
             })
             .catch(registrationError => {
                 console.log('SW registration failed: ', registrationError);

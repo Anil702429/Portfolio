@@ -1,65 +1,72 @@
-const CACHE_NAME = 'portfolio-v2-django';
+const CACHE_NAME = "anil-rijal-portfolio-v1";
 
 const STATIC_ASSETS = [
-    '/styles.css',
-    '/script.js',
-    '/manifest.json',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+    "/",
+    "/index.html",
+    "/styles.css",
+    "/script.js",
+    "/manifest.json",
+    "/images/icon-192.png",
+    "/images/icon-512.png",
+    "/images/icon-512-maskable.png"
 ];
 
-self.addEventListener('install', event => {
+// Install
+self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
+        caches.open(CACHE_NAME)
+            .then((cache) => cache.addAll(STATIC_ASSETS))
+            .then(() => self.skipWaiting())
     );
-    self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
+// Activate
+self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys()
-            .then(cacheNames =>
+            .then((cacheNames) =>
                 Promise.all(
-                    cacheNames.map(cacheName => {
-                        if (cacheName !== CACHE_NAME) {
-                            return caches.delete(cacheName);
-                        }
-                    })
+                    cacheNames
+                        .filter((cacheName) => cacheName !== CACHE_NAME)
+                        .map((cacheName) => caches.delete(cacheName))
                 )
             )
             .then(() => self.clients.claim())
     );
 });
 
-self.addEventListener('fetch', event => {
-    const { request } = event;
+// Fetch
+self.addEventListener("fetch", (event) => {
+    const request = event.request;
 
-    if (request.method !== 'GET') {
+    // Only handle GET requests
+    if (request.method !== "GET") {
         return;
     }
 
-    // Always fetch HTML fresh so updates appear without a hard refresh
-    if (request.mode === 'navigate' || request.destination === 'document') {
-        event.respondWith(
-            fetch(request)
-                .then(response => {
-                    const responseClone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, responseClone));
-                    return response;
-                })
-                .catch(() => caches.match(request))
-        );
-        return;
-    }
-
-    // Static assets: try network first, fall back to cache
     event.respondWith(
         fetch(request)
-            .then(response => {
-                const responseClone = response.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(request, responseClone));
+            .then((response) => {
+                // Keep a fresh copy of successful same-origin requests.
+                if (
+                    response &&
+                    response.status === 200 &&
+                    new URL(request.url).origin === self.location.origin
+                ) {
+                    const responseClone = response.clone();
+
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(request, responseClone);
+                    });
+                }
+
                 return response;
             })
-            .catch(() => caches.match(request))
+            .catch(() => {
+                return caches.match(request)
+                    .then((cachedResponse) => {
+                        return cachedResponse || caches.match("/index.html");
+                    });
+            })
     );
 });

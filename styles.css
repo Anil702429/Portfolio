@@ -3872,3 +3872,374 @@ body.light-mode .profile-card {
     }
 
 }
+
+/* =========================================================
+   SKILLS — TECHNICAL TOOLKIT
+   ========================================================= */
+
+.skills-section {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   SKILLS GRID
+   ========================================================= */
+
+.skills-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 65px;
+}
+
+
+/* =========================================================
+   SKILL CARD
+   ========================================================= */
+
+.skill-card {
+    position: relative;
+
+    min-height: 310px;
+
+    padding: 28px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.012)
+        );
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.skill-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: -120px;
+    right: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.08);
+
+    filter: blur(40px);
+
+    opacity: 0;
+
+    transition: opacity 0.35s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(96, 165, 250, 0.22);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.skill-card:hover::before {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   CARD TOP
+   ========================================================= */
+
+.skill-card-top {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
+}
+
+.skill-number {
+    color: rgba(255, 255, 255, 0.24);
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: 0.7rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+.skill-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(96, 165, 250, 0.13);
+
+    border-radius: 10px;
+
+    background: rgba(37, 99, 235, 0.07);
+
+    color: #60a5fa;
+
+    font-size: 0.95rem;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+    transform: translateY(-2px);
+
+    background: rgba(37, 99, 235, 0.12);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.skill-card h3 {
+    margin: 0 0 12px;
+
+    color: var(--text);
+
+    font-family: "Space Grotesk", sans-serif;
+
+    font-size: 1.15rem;
+
+    font-weight: 600;
+
+    letter-spacing: -0.02em;
+}
+
+.skill-card > p {
+    max-width: 470px;
+
+    margin: 0;
+
+    color: var(--text-soft);
+
+    font-size: 0.84rem;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   SKILL TAGS
+   ========================================================= */
+
+.skill-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 24px;
+}
+
+.skill-tags span {
+    padding: 6px 9px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 6px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: var(--text-muted);
+
+    font-size: 0.65rem;
+
+    font-weight: 600;
+
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.skill-card:hover .skill-tags span {
+    border-color: rgba(96, 165, 250, 0.14);
+
+    color: var(--text-soft);
+}
+
+
+/* =========================================================
+   TECHNOLOGY STRIP
+   ========================================================= */
+
+.technology-strip {
+    display: grid;
+
+    grid-template-columns:
+        150px minmax(0, 1fr);
+
+    gap: 30px;
+
+    align-items: start;
+
+    margin-top: 45px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.technology-strip-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: var(--text-muted);
+
+    font-size: 0.65rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+}
+
+.technology-strip-label span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+.technology-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.technology-list span {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 10px;
+
+    color: var(--text-muted);
+
+    font-size: 0.68rem;
+
+    font-weight: 600;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.technology-list span:hover {
+    color: var(--text);
+
+    transform: translateY(-1px);
+}
+
+.technology-list i {
+    color: #60a5fa;
+}
+
+
+/* =========================================================
+   SKILLS RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+
+        margin-top: 50px;
+    }
+
+    .skill-card {
+        min-height: auto;
+    }
+
+    .technology-strip {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .skill-card {
+        padding: 22px;
+    }
+
+    .skill-card-top {
+        margin-bottom: 22px;
+    }
+
+    .skill-card h3 {
+        font-size: 1.05rem;
+    }
+
+    .skill-card > p {
+        font-size: 0.8rem;
+    }
+
+    .technology-list {
+        gap: 3px;
+    }
+
+    .technology-list span {
+        padding: 6px 7px;
+
+        font-size: 0.62rem;
+    }
+
+}

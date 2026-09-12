@@ -2,6 +2,25 @@
 <html lang="en">
 
 <head>
+
+    <!-- =====================================================
+         PWA
+         ===================================================== -->
+
+    <meta name="theme-color" content="#080b12">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Anil Rijal">
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/images/icon-192.png">
+
+
+    <!-- =====================================================
+         BASIC META
+         ===================================================== -->
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,7 +28,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Anil Rijal | Python & Django Developer</title>
+    <title>
+        Anil Rijal | Python & Django Developer
+    </title>
 
     <meta
         name="description"
@@ -21,21 +42,40 @@
         content="Anil Rijal, Python Developer, Django Developer, Backend Developer, REST API, PostgreSQL, Docker, Nepal Developer"
     >
 
-    <meta name="author" content="Anil Rijal">
+    <meta
+        name="author"
+        content="Anil Rijal"
+    >
 
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
+    <meta
+        name="robots"
+        content="index, follow"
+    >
 
-    <meta name="theme-color" content="#080b12">
+    <meta
+        name="googlebot"
+        content="index, follow"
+    >
 
-    <!-- Canonical URL -->
+
+    <!-- =====================================================
+         CANONICAL
+         ===================================================== -->
+
     <link
         rel="canonical"
         href="https://anilrijal.info.np/"
     >
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
+
+    <!-- =====================================================
+         OPEN GRAPH
+         ===================================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
 
     <meta
         property="og:title"
@@ -67,7 +107,11 @@
         content="Anil Rijal - Python and Django Developer"
     >
 
-    <!-- Twitter / X -->
+
+    <!-- =====================================================
+         TWITTER / X
+         ===================================================== -->
+
     <meta
         name="twitter:card"
         content="summary_large_image"
@@ -88,26 +132,26 @@
         content="https://anilrijal.info.np/images/profile-photo.jpg"
     >
 
-    <!-- Favicon -->
+
+    <!-- =====================================================
+         FAVICON
+         ===================================================== -->
+
     <link
         rel="icon"
         type="image/jpeg"
         href="images/profile-photo.jpg"
     >
 
-    <link
-        rel="apple-touch-icon"
-        href="images/profile-photo.jpg"
-    >
 
-    <!-- Web App -->
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
+    <!-- =====================================================
+         FONTS
+         ===================================================== -->
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
     <link
         rel="preconnect"
@@ -120,76 +164,74 @@
         rel="stylesheet"
     >
 
-    <!-- Icons -->
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- Main stylesheet -->
+
+    <!-- =====================================================
+         MAIN STYLESHEET
+         ===================================================== -->
+
     <link
         rel="stylesheet"
         href="styles.css"
     >
+
+
+    <!-- =====================================================
+         STRUCTURED DATA
+         ===================================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Anil Rijal",
+        "url": "https://anilrijal.info.np/",
+        "image": "https://anilrijal.info.np/images/profile-photo.jpg",
+        "jobTitle": "Python & Django Developer",
+        "description": "Python and Django developer focused on backend engineering, REST APIs, database systems and production-ready web applications.",
+        "sameAs": [
+            "https://github.com/Anil702429",
+            "https://www.linkedin.com/in/anil-rijal-84559124/",
+            "https://www.instagram.com/anilrijal980/",
+            "https://youtube.com/@echoverse-y2i"
+        ],
+        "knowsAbout": [
+            "Python",
+            "Django",
+            "Django REST Framework",
+            "PostgreSQL",
+            "Docker",
+            "JavaScript",
+            "Backend Development",
+            "REST APIs",
+            "Web Development"
+        ]
+    }
+    </script>
+
 </head>
 
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Anil Rijal",
-    "url": "https://anilrijal.info.np/",
-    "image": "https://anilrijal.info.np/images/profile-photo.jpg",
-    "jobTitle": "Python & Django Developer",
-    "description": "Python and Django developer focused on backend engineering, REST APIs, database systems and production-ready web applications.",
-    "sameAs": [
-        "https://github.com/Anil702429",
-        "https://www.linkedin.com/",
-        "https://www.instagram.com/",
-        "https://www.youtube.com/"
-    ],
-    "knowsAbout": [
-        "Python",
-        "Django",
-        "Django REST Framework",
-        "PostgreSQL",
-        "Docker",
-        "JavaScript",
-        "Backend Development",
-        "REST APIs",
-        "Web Development"
-    ]
-}
-</script>
-
-<script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-            navigator.serviceWorker
-                .register("/sw.js")
-                .then((registration) => {
-                    console.log(
-                        "Service Worker registered:",
-                        registration.scope
-                    );
-                })
-                .catch((error) => {
-                    console.error(
-                        "Service Worker registration failed:",
-                        error
-                    );
-                });
-        });
-    }
-</script>
 
 <body class="dark-mode">
+
 
     <!-- =====================================================
          PAGE PROGRESS
          ===================================================== -->
 
-    <div class="scroll-progress" id="scrollProgress"></div>
+    <div
+        class="scroll-progress"
+        id="scrollProgress"
+    ></div>
 
 
     <!-- =====================================================
@@ -202,7 +244,14 @@
 
             <div class="container nav-container">
 
-                <a href="#home" class="brand" aria-label="Anil Rijal home">
+
+                <!-- BRAND -->
+
+                <a
+                    href="#home"
+                    class="brand"
+                    aria-label="Anil Rijal home"
+                >
 
                     <span class="brand-mark">
                         AR
@@ -215,44 +264,81 @@
                 </a>
 
 
-                <div class="nav-menu" id="navMenu">
+                <!-- NAVIGATION -->
 
-                    <a href="#home" class="nav-link active">
+                <div
+                    class="nav-menu"
+                    id="navMenu"
+                >
+
+                    <a
+                        href="#home"
+                        class="nav-link active"
+                    >
                         Home
                     </a>
 
-                    <a href="#work" class="nav-link">
+                    <a
+                        href="#work"
+                        class="nav-link"
+                    >
                         Work
                     </a>
 
-                    <a href="#about" class="nav-link">
+                    <a
+                        href="#about"
+                        class="nav-link"
+                    >
                         About
                     </a>
 
-                    <a href="#skills" class="nav-link">
+                    <a
+                        href="#skills"
+                        class="nav-link"
+                    >
                         Skills
                     </a>
 
-                    <a href="#contact" class="nav-link">
+                    <a
+                        href="#contact"
+                        class="nav-link"
+                    >
                         Contact
                     </a>
 
                 </div>
 
 
+                <!-- NAV ACTIONS -->
+
                 <div class="nav-actions">
 
-                    <a href="https://github.com/Anil702429" target="_blank" rel="noopener noreferrer" class="nav-github"
-                        aria-label="GitHub">
+                    <a
+                        href="https://github.com/Anil702429"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="nav-github"
+                        aria-label="GitHub"
+                    >
                         <i class="fab fa-github"></i>
                     </a>
 
-                    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        id="themeToggle"
+                        aria-label="Toggle theme"
+                    >
                         <i class="fas fa-sun"></i>
                     </button>
 
-                    <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open navigation"
-                        aria-expanded="false">
+                    <button
+                        type="button"
+                        class="menu-toggle"
+                        id="menuToggle"
+                        aria-label="Open navigation"
+                        aria-expanded="false"
+                    >
                         <span></span>
                         <span></span>
                         <span></span>
@@ -267,6 +353,10 @@
     </header>
 
 
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
     <main>
 
 
@@ -274,24 +364,25 @@
              HERO
              ================================================= -->
 
-        <!-- =================================================
-     HERO
-     ================================================= -->
-
-        <section id="home" class="hero">
+        <section
+            id="home"
+            class="hero"
+        >
 
             <div class="hero-grid"></div>
 
             <div class="hero-glow hero-glow-one"></div>
+
             <div class="hero-glow hero-glow-two"></div>
 
 
             <div class="container hero-container">
 
 
-                <!-- ================= HERO CONTENT ================= -->
+                <!-- HERO CONTENT -->
 
                 <div class="hero-copy">
+
 
                     <div class="availability">
 
@@ -312,9 +403,11 @@
                     <h1 class="hero-title">
 
                         I build
+
                         <span class="accent-text">
                             reliable
                         </span>
+
                         software for the real world.
 
                     </h1>
@@ -331,7 +424,10 @@
 
                     <div class="hero-actions">
 
-                        <a href="#work" class="button button-primary">
+                        <a
+                            href="#work"
+                            class="button button-primary"
+                        >
 
                             Explore my work
 
@@ -340,8 +436,12 @@
                         </a>
 
 
-                        <a href="https://github.com/Anil702429" target="_blank" rel="noopener noreferrer"
-                            class="button button-secondary">
+                        <a
+                            href="https://github.com/Anil702429"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="button button-secondary"
+                        >
 
                             <i class="fab fa-github"></i>
 
@@ -352,7 +452,7 @@
                     </div>
 
 
-                    <!-- Technology stack -->
+                    <!-- TECHNOLOGY STACK -->
 
                     <div class="hero-stack-label">
                         Currently working with
@@ -391,7 +491,7 @@
                 </div>
 
 
-                <!-- ================= HERO VISUAL ================= -->
+                <!-- HERO VISUAL -->
 
                 <div class="hero-profile">
 
@@ -402,7 +502,7 @@
                         <div class="profile-glow"></div>
 
 
-                        <!-- Floating code badge -->
+                        <!-- CODE BADGE -->
 
                         <div class="profile-code-card">
 
@@ -415,17 +515,21 @@
                         </div>
 
 
-                        <!-- Profile image -->
+                        <!-- PROFILE IMAGE -->
 
                         <div class="profile-image-wrapper">
 
-                            <img src="images/profile-photo.jpg" alt="Anil Rijal - Python and Django Developer"
-                                class="profile-image" loading="eager">
+                            <img
+                                src="images/profile-photo.jpg"
+                                alt="Anil Rijal - Python and Django Developer"
+                                class="profile-image"
+                                loading="eager"
+                            >
 
                         </div>
 
 
-                        <!-- Backend badge -->
+                        <!-- BACKEND BADGE -->
 
                         <div class="profile-card profile-card-top">
 
@@ -448,7 +552,7 @@
                         </div>
 
 
-                        <!-- Project badge -->
+                        <!-- PROJECT BADGE -->
 
                         <div class="profile-card profile-card-bottom">
 
@@ -471,7 +575,7 @@
                         </div>
 
 
-                        <!-- Orbiting element -->
+                        <!-- ORBIT -->
 
                         <div class="profile-orbit">
 
@@ -486,7 +590,7 @@
             </div>
 
 
-            <!-- ================= HERO FOOTER ================= -->
+            <!-- HERO FOOTER -->
 
             <div class="hero-bottom">
 
@@ -502,16 +606,16 @@
 
                     </div>
 
-
                     <span class="hero-line"></span>
-
 
                     <span class="hero-focus">
                         Building web & backend systems
                     </span>
 
-
-                    <a href="#work" class="hero-scroll-link">
+                    <a
+                        href="#work"
+                        class="hero-scroll-link"
+                    >
 
                         Scroll to explore
 
@@ -530,7 +634,10 @@
              WORK
              ================================================= -->
 
-        <section id="work" class="section work-section">
+        <section
+            id="work"
+            class="section work-section"
+        >
 
             <div class="container">
 
@@ -562,9 +669,12 @@
                 </div>
 
 
-                <!-- Project grid is populated by script.js -->
+                <!-- PROJECT GRID -->
 
-                <div class="work-grid" id="projectsGrid">
+                <div
+                    class="work-grid"
+                    id="projectsGrid"
+                >
 
                     <div class="projects-loading">
 
@@ -579,14 +689,18 @@
                 </div>
 
 
-                <!-- GitHub link -->
+                <!-- GITHUB LINK -->
 
                 <div class="projects-footer">
 
                     <span class="projects-footer-line"></span>
 
-                    <a href="https://github.com/Anil702429" target="_blank" rel="noopener noreferrer"
-                        class="projects-github-link">
+                    <a
+                        href="https://github.com/Anil702429"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="projects-github-link"
+                    >
 
                         View all projects on GitHub
 
@@ -602,11 +716,15 @@
 
         </section>
 
-        <!-- =================================================
-     ABOUT
-     ================================================= -->
 
-        <section id="about" class="section about-section">
+        <!-- =================================================
+             ABOUT
+             ================================================= -->
+
+        <section
+            id="about"
+            class="section about-section"
+        >
 
             <div class="container">
 
@@ -640,9 +758,7 @@
                 <div class="about-layout">
 
 
-                    <!-- =========================================
-                 MAIN STORY
-                 ========================================= -->
+                    <!-- MAIN STORY -->
 
                     <div class="about-main">
 
@@ -691,7 +807,10 @@
                         </p>
 
 
-                        <a href="#contact" class="text-link">
+                        <a
+                            href="#contact"
+                            class="text-link"
+                        >
 
                             Let's build something
 
@@ -702,9 +821,7 @@
                     </div>
 
 
-                    <!-- =========================================
-                 DEVELOPER PROFILE
-                 ========================================= -->
+                    <!-- DEVELOPER PROFILE -->
 
                     <div class="about-profile">
 
@@ -738,9 +855,17 @@
                                 </span>
 
                                 <span class="code-text">
-                                    <span class="code-keyword">const</span>
+
+                                    <span class="code-keyword">
+                                        const
+                                    </span>
+
                                     developer
-                                    <span class="code-symbol">=</span>
+
+                                    <span class="code-symbol">
+                                        =
+                                    </span>
+
                                 </span>
 
                             </div>
@@ -753,7 +878,11 @@
                                 </span>
 
                                 <span class="code-text code-indent">
-                                    <span class="code-bracket">{</span>
+
+                                    <span class="code-bracket">
+                                        {
+                                    </span>
+
                                 </span>
 
                             </div>
@@ -768,6 +897,7 @@
                                 <span class="code-text code-indent-two">
 
                                     focus:
+
                                     <span class="code-string">
                                         "backend"
                                     </span>
@@ -786,6 +916,7 @@
                                 <span class="code-text code-indent-two">
 
                                     stack:
+
                                     <span class="code-string">
                                         "Python / Django"
                                     </span>
@@ -804,6 +935,7 @@
                                 <span class="code-text code-indent-two">
 
                                     mindset:
+
                                     <span class="code-string">
                                         "build & improve"
                                     </span>
@@ -821,7 +953,9 @@
 
                                 <span class="code-text code-indent">
 
-                                    <span class="code-bracket">}</span>
+                                    <span class="code-bracket">
+                                        }
+                                    </span>
 
                                 </span>
 
@@ -844,8 +978,11 @@
                         <div class="about-profile-footer">
 
                             <span>
+
                                 <i class="fas fa-circle"></i>
+
                                 Open to opportunities
+
                             </span>
 
                             <span>
@@ -859,9 +996,7 @@
                 </div>
 
 
-                <!-- =========================================
-             STATS
-             ========================================= -->
+                <!-- STATS -->
 
                 <div class="about-stats">
 
@@ -923,11 +1058,15 @@
 
         </section>
 
-        <!-- =================================================
-     SKILLS
-     ================================================= -->
 
-        <section id="skills" class="section skills-section">
+        <!-- =================================================
+             SKILLS
+             ================================================= -->
+
+        <section
+            id="skills"
+            class="section skills-section"
+        >
 
             <div class="container">
 
@@ -961,9 +1100,7 @@
                 <div class="skills-grid">
 
 
-                    <!-- =========================================
-                 BACKEND
-                 ========================================= -->
+                    <!-- BACKEND -->
 
                     <article class="skill-card">
 
@@ -986,9 +1123,11 @@
 
 
                         <p>
+
                             Building application logic, REST APIs,
                             authentication systems and backend services
                             designed to remain maintainable as projects grow.
+
                         </p>
 
 
@@ -1004,9 +1143,7 @@
                     </article>
 
 
-                    <!-- =========================================
-                 DATABASE
-                 ========================================= -->
+                    <!-- DATABASE -->
 
                     <article class="skill-card">
 
@@ -1029,9 +1166,11 @@
 
 
                         <p>
+
                             Designing relational data models, working with
                             ORMs and building database-backed applications
                             with an emphasis on consistency and performance.
+
                         </p>
 
 
@@ -1047,9 +1186,7 @@
                     </article>
 
 
-                    <!-- =========================================
-                 DEVOPS
-                 ========================================= -->
+                    <!-- DEVOPS -->
 
                     <article class="skill-card">
 
@@ -1072,9 +1209,11 @@
 
 
                         <p>
+
                             Working with containers, version control,
                             development environments and deployment
                             workflows for reliable applications.
+
                         </p>
 
 
@@ -1090,9 +1229,7 @@
                     </article>
 
 
-                    <!-- =========================================
-                 FRONTEND
-                 ========================================= -->
+                    <!-- FRONTEND -->
 
                     <article class="skill-card">
 
@@ -1115,9 +1252,11 @@
 
 
                         <p>
+
                             Creating responsive interfaces and connecting
                             frontend experiences with backend systems and
                             APIs.
+
                         </p>
 
 
@@ -1135,15 +1274,16 @@
                 </div>
 
 
-                <!-- =========================================
-             TECHNOLOGY STRIP
-             ========================================= -->
+                <!-- TECHNOLOGY STRIP -->
 
                 <div class="technology-strip">
 
                     <div class="technology-strip-label">
+
                         <span></span>
+
                         TECHNOLOGIES
+
                     </div>
 
 
@@ -1197,17 +1337,22 @@
 
         </section>
 
+
         <!-- =================================================
              CONTACT
              ================================================= -->
 
-        <section id="contact" class="section contact-section">
+        <section
+            id="contact"
+            class="section contact-section"
+        >
 
             <div class="container">
 
-
                 <div class="contact-box">
 
+
+                    <!-- CONTACT COPY -->
 
                     <div class="contact-copy">
 
@@ -1216,8 +1361,13 @@
                         </span>
 
                         <h2>
+
                             Have a project
-                            <span>in mind?</span>
+
+                            <span>
+                                in mind?
+                            </span>
+
                         </h2>
 
                         <p>
@@ -1229,7 +1379,10 @@
                         </p>
 
 
-                        <a href="mailto:anilrijal980@gmail.com" class="contact-email">
+                        <a
+                            href="mailto:anilrijal980@gmail.com"
+                            class="contact-email"
+                        >
 
                             anilrijal980@gmail.com
 
@@ -1240,9 +1393,17 @@
                     </div>
 
 
+                    <!-- CONTACT ACTIONS -->
+
                     <div class="contact-actions">
 
-                        <a href="mailto:anilrijal980@gmail.com" class="button button-primary">
+
+                        <!-- START A CONVERSATION -->
+
+                        <a
+                            href="mailto:anilrijal980@gmail.com"
+                            class="button button-primary"
+                        >
 
                             Start a conversation
 
@@ -1251,26 +1412,82 @@
                         </a>
 
 
+                        <!-- PWA INSTALL -->
+
+                        <button
+                            id="installAppBtn"
+                            class="install-app-btn"
+                            type="button"
+                            aria-label="Install Anil Rijal Portfolio"
+                        >
+
+                            <i class="fa-solid fa-download"></i>
+
+                            <span>
+                                Install App
+                            </span>
+
+                        </button>
+
+
+                        <!-- SOCIAL LINKS -->
+
                         <div class="social-links">
 
-                            <a href="https://github.com/Anil702429" target="_blank" rel="noopener noreferrer"
-                                aria-label="GitHub">
+
+                            <!-- GITHUB -->
+
+                            <a
+                                href="https://github.com/Anil702429"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub"
+                            >
+
                                 <i class="fab fa-github"></i>
+
                             </a>
 
-                            <a href="https://www.linkedin.com/in/anil-rijal-84559124b/" target="_blank"
-                                rel="noopener noreferrer" aria-label="LinkedIn">
+
+                            <!-- LINKEDIN -->
+
+                            <a
+                                href="https://www.linkedin.com/in/anil-rijal-84559124/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                            >
+
                                 <i class="fab fa-linkedin-in"></i>
+
                             </a>
 
-                            <a href="https://www.instagram.com/anilrijal980/" target="_blank" rel="noopener noreferrer"
-                                aria-label="Instagram">
+
+                            <!-- INSTAGRAM -->
+
+                            <a
+                                href="https://www.instagram.com/anilrijal980/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                            >
+
                                 <i class="fab fa-instagram"></i>
+
                             </a>
 
-                            <a href="https://youtube.com/@echoverse-y2i" target="_blank" rel="noopener noreferrer"
-                                aria-label="YouTube">
+
+                            <!-- YOUTUBE -->
+
+                            <a
+                                href="https://youtube.com/@echoverse-y2i"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube"
+                            >
+
                                 <i class="fab fa-youtube"></i>
+
                             </a>
 
                         </div>
@@ -1294,9 +1511,13 @@
 
         <div class="container footer-inner">
 
+
             <div>
 
-                <a href="#home" class="footer-brand">
+                <a
+                    href="#home"
+                    class="footer-brand"
+                >
                     Anil Rijal
                 </a>
 
@@ -1314,8 +1535,11 @@
                 </span>
 
                 <a href="#home">
+
                     Back to top
+
                     <i class="fas fa-arrow-up"></i>
+
                 </a>
 
             </div>
@@ -1325,7 +1549,49 @@
     </footer>
 
 
+    <!-- =====================================================
+         MAIN JAVASCRIPT
+         ===================================================== -->
+
     <script src="script.js"></script>
+
+
+    <!-- =====================================================
+         SERVICE WORKER
+         ===================================================== -->
+
+    <script>
+
+        if ("serviceWorker" in navigator) {
+
+            window.addEventListener("load", () => {
+
+                navigator.serviceWorker
+                    .register("/sw.js")
+
+                    .then((registration) => {
+
+                        console.log(
+                            "Service Worker registered:",
+                            registration.scope
+                        );
+
+                    })
+
+                    .catch((error) => {
+
+                        console.error(
+                            "Service Worker registration failed:",
+                            error
+                        );
+
+                    });
+
+            });
+
+        }
+
+    </script>
 
 </body>
 

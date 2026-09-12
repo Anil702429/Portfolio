@@ -3089,3 +3089,58 @@ body.light-mode .profile-card {
         transform: none;
     }
 }
+
+/* =========================================================
+   CONTACT ACTIONS
+   ========================================================= */
+
+.contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-actions .button-primary {
+    display: inline-flex;
+}
+
+.install-app-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    border-radius: 10px;
+
+    background: rgba(37, 99, 235, 0.10);
+    color: inherit;
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.install-app-btn:hover {
+    background: rgba(37, 99, 235, 0.18);
+    border-color: rgba(37, 99, 235, 0.55);
+    transform: translateY(-1px);
+}
+
+.install-app-btn:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
+}
+
+.install-app-btn[hidden] {
+    display: none;
+}

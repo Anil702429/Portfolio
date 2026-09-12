@@ -1,5 +1,127 @@
 console.log("PORTFOLIO SCRIPT LOADED");
 
+
+/* =========================================================
+   PWA INSTALL
+   ========================================================= */
+
+let deferredInstallPrompt = null;
+
+
+/*
+ * Capture the browser install prompt.
+ */
+window.addEventListener("beforeinstallprompt", (event) => {
+
+    event.preventDefault();
+
+    deferredInstallPrompt = event;
+
+    console.log(
+        "🔥 beforeinstallprompt FIRED"
+    );
+
+    const installButton =
+        document.getElementById("installAppBtn");
+
+    if (installButton) {
+
+        installButton.hidden = false;
+
+        console.log(
+            "✅ Install App button enabled."
+        );
+
+    }
+
+});
+
+
+/*
+ * Handle Install App button.
+ */
+document.addEventListener("click", async (event) => {
+
+    const installButton =
+        event.target.closest("#installAppBtn");
+
+
+    if (!installButton) {
+        return;
+    }
+
+
+    console.log(
+        "🟢 Install App button clicked."
+    );
+
+
+    /*
+     * Browser has not provided an install prompt.
+     */
+    if (!deferredInstallPrompt) {
+
+        console.warn(
+            "⚠️ No install prompt is currently available."
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * Show browser installation dialog.
+     */
+    deferredInstallPrompt.prompt();
+
+
+    const result =
+        await deferredInstallPrompt.userChoice;
+
+
+    console.log(
+        "PWA install choice:",
+        result.outcome
+    );
+
+
+    /*
+     * The prompt can only be used once.
+     */
+    deferredInstallPrompt = null;
+
+
+    installButton.hidden = true;
+
+});
+
+
+/*
+ * App successfully installed.
+ */
+window.addEventListener("appinstalled", () => {
+
+    console.log(
+        "✅ Portfolio PWA installed successfully."
+    );
+
+
+    deferredInstallPrompt = null;
+
+
+    const installButton =
+        document.getElementById("installAppBtn");
+
+
+    if (installButton) {
+
+        installButton.hidden = true;
+
+    }
+
+});
+
 /* =========================================================
    ANIL RIJAL PORTFOLIO
    Professional Portfolio JavaScript

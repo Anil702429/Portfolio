@@ -404,126 +404,107 @@ function observeRevealElements() {
 /* =========================================================
    GITHUB PROJECTS
    ========================================================= */
-
+   
 async function loadGitHubProjects() {
 
     if (!projectsGrid) {
+        console.error("❌ projectsGrid not found");
         return;
     }
 
+    console.log("🔵 Starting GitHub project loading...");
 
     showLoading();
 
-
     const apiUrl =
         "https://api.github.com/search/repositories" +
-        `?q=user:${encodeURIComponent(
-            GITHUB_USERNAME
-        )}+topic:${encodeURIComponent(
-            PORTFOLIO_TOPIC
-        )}` +
+        `?q=user:${encodeURIComponent(GITHUB_USERNAME)}+topic:${encodeURIComponent(PORTFOLIO_TOPIC)}` +
         "&sort=updated" +
         "&order=desc" +
         `&per_page=${MAX_PROJECTS}`;
 
+    console.log("🌐 GitHub API URL:", apiUrl);
 
     try {
 
-        const response =
-            await fetch(
-                apiUrl,
-                {
-                    headers: {
-                        Accept:
-                            "application/vnd.github+json"
-                    }
-                }
-            );
+        const response = await fetch(apiUrl, {
+            headers: {
+                Accept: "application/vnd.github+json"
+            }
+        });
 
+        console.log("📡 GitHub HTTP status:", response.status);
+        console.log("📡 GitHub response OK:", response.ok);
+
+        const data = await response.json();
+
+        console.log("📦 GitHub API response:", data);
+        console.log("📊 Total repositories found:", data.total_count);
 
         if (!response.ok) {
-
             throw new Error(
+                data.message ||
                 `GitHub API error: ${response.status}`
             );
-
         }
-
-
-        const data =
-            await response.json();
-
 
         let repositories =
             Array.isArray(data.items)
                 ? data.items
                 : [];
 
-
-        repositories =
-            repositories.filter(
-                repository =>
-                    repository.name
-                        .toLowerCase() !==
-                    "portfolio"
-            );
-
-
-        repositories.sort(
-            (a, b) => {
-
-                const aFeatured =
-                    Array.isArray(a.topics) &&
-                    a.topics.includes(
-                        FEATURED_TOPIC
-                    );
-
-
-                const bFeatured =
-                    Array.isArray(b.topics) &&
-                    b.topics.includes(
-                        FEATURED_TOPIC
-                    );
-
-
-                if (
-                    aFeatured !==
-                    bFeatured
-                ) {
-
-                    return bFeatured
-                        ? 1
-                        : -1;
-
-                }
-
-
-                return (
-                    new Date(
-                        b.updated_at
-                    ) -
-                    new Date(
-                        a.updated_at
-                    )
-                );
-
-            }
+        console.log(
+            "📁 Repositories returned:",
+            repositories.map(repo => ({
+                name: repo.name,
+                topics: repo.topics,
+                language: repo.language,
+                url: repo.html_url
+            }))
         );
 
+        repositories = repositories.filter(
+            repository =>
+                repository.name.toLowerCase() !== "portfolio"
+        );
 
-        if (
-            repositories.length === 0
-        ) {
+        if (repositories.length === 0) {
+
+            console.warn(
+                "⚠️ GitHub returned no portfolio repositories."
+            );
 
             showEmptyState();
-
             return;
-
         }
 
+        repositories.sort((a, b) => {
+
+            const aFeatured =
+                Array.isArray(a.topics) &&
+                a.topics.includes(FEATURED_TOPIC);
+
+            const bFeatured =
+                Array.isArray(b.topics) &&
+                b.topics.includes(FEATURED_TOPIC);
+
+            if (aFeatured !== bFeatured) {
+                return bFeatured ? 1 : -1;
+            }
+
+            return (
+                new Date(b.updated_at) -
+                new Date(a.updated_at)
+            );
+
+        });
+
+        console.log(
+            "✅ Rendering repositories:",
+            repositories.length
+        );
 
         projectsGrid.innerHTML = "";
-
 
         repositories.forEach(
             (repository, index) => {
@@ -538,24 +519,20 @@ async function loadGitHubProjects() {
             }
         );
 
-
         initializeProjectLinks();
-
         observeRevealElements();
 
+        console.log("✅ GitHub projects rendered successfully.");
 
     } catch (error) {
 
         console.error(
-            "Unable to load GitHub projects:",
+            "❌ Unable to load GitHub projects:",
             error
         );
 
-
         showErrorState();
-
     }
-
 }
 
 

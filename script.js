@@ -404,7 +404,7 @@ function observeRevealElements() {
 /* =========================================================
    GITHUB PROJECTS
    ========================================================= */
-   
+
 async function loadGitHubProjects() {
 
     if (!projectsGrid) {
@@ -540,10 +540,188 @@ async function loadGitHubProjects() {
    PROJECT CARD
    ========================================================= */
 
-function createProjectCard(
-    repository,
-    index
-) {
+function createProjectCard(repository, index) {
+
+    const article = document.createElement("article");
+
+    article.className = "work-item";
+
+    const topics = Array.isArray(repository.topics)
+        ? repository.topics.filter(topic =>
+            topic !== PORTFOLIO_TOPIC &&
+            topic !== FEATURED_TOPIC
+        )
+        : [];
+
+    if (topics.length === 0 && repository.language) {
+        topics.push(repository.language);
+    }
+
+    const visibleTopics = topics.slice(0, 4);
+
+    const isFeatured =
+        Array.isArray(repository.topics) &&
+        repository.topics.includes(FEATURED_TOPIC);
+
+    const description =
+        repository.description ||
+        "A software project developed by Anil Rijal.";
+
+    const homepage =
+        typeof repository.homepage === "string" &&
+        repository.homepage.trim()
+            ? repository.homepage.trim()
+            : null;
+
+    const githubUrl = repository.html_url;
+
+    const language = repository.language || "Code";
+
+    const stars = repository.stargazers_count || 0;
+    const forks = repository.forks_count || 0;
+
+    const tags = visibleTopics
+        .map(topic => `
+            <span class="project-tag">
+                ${escapeHTML(formatTopic(topic))}
+            </span>
+        `)
+        .join("");
+
+    /*
+     * Generate a clean visual instead of using GitHub's
+     * OpenGraph image.
+     */
+
+    const projectInitial =
+        repository.name
+            .charAt(0)
+            .toUpperCase();
+
+    article.innerHTML = `
+
+        <div class="project-visual">
+
+            <div class="project-visual-grid"></div>
+
+            <div class="project-visual-content">
+
+                <span class="project-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </span>
+
+                <div class="project-icon">
+                    ${escapeHTML(projectInitial)}
+                </div>
+
+                <span class="project-language">
+                    ${escapeHTML(language)}
+                </span>
+
+            </div>
+
+            ${
+                isFeatured
+                    ? `
+                        <span class="featured-badge">
+                            <i class="fas fa-star"></i>
+                            Featured
+                        </span>
+                    `
+                    : ""
+            }
+
+        </div>
+
+
+        <div class="project-body">
+
+            <div class="project-title-row">
+
+                <h3>
+                    ${escapeHTML(
+                        formatProjectName(repository.name)
+                    )}
+                </h3>
+
+            </div>
+
+
+            <p class="project-description">
+                ${escapeHTML(description)}
+            </p>
+
+
+            ${
+                tags
+                    ? `
+                        <div class="work-tags">
+                            ${tags}
+                        </div>
+                    `
+                    : ""
+            }
+
+
+            <div class="project-meta">
+
+                <span>
+                    <i class="fas fa-star"></i>
+                    ${stars}
+                </span>
+
+                <span>
+                    <i class="fas fa-code-branch"></i>
+                    ${forks}
+                </span>
+
+                <span>
+                    <i class="fas fa-code"></i>
+                    ${escapeHTML(language)}
+                </span>
+
+            </div>
+
+
+            <div class="project-links">
+
+                <a
+                    href="${escapeHTML(githubUrl)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                    data-external="true"
+                >
+                    <i class="fab fa-github"></i>
+                    GitHub
+                </a>
+
+
+                ${
+                    homepage
+                        ? `
+                            <a
+                                href="${escapeHTML(homepage)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="project-link project-link-primary"
+                                data-external="true"
+                            >
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                                Live Demo
+                            </a>
+                        `
+                        : ""
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+    return article;
+} {
 
     const article =
         document.createElement(

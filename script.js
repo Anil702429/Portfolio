@@ -1,444 +1,1020 @@
-// DOM Elements
+/* =========================================================
+   ANIL RIJAL PORTFOLIO
+   Professional Portfolio JavaScript
+   ========================================================= */
+
+
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
+
+const GITHUB_USERNAME = "Anil702429";
+
+const PORTFOLIO_TOPIC = "portfolio";
+
+const FEATURED_TOPIC = "featured";
+
+const MAX_PROJECTS = 20;
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
 const body = document.body;
-const themeToggle = document.getElementById('themeToggle');
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.querySelector('.nav-menu');
-const navLinks = document.querySelectorAll('.nav-link');
-const contactForm = document.querySelector('.contact-form');
-const skillProgressBars = document.querySelectorAll('.skill-progress');
 
-// Theme Management
-let currentTheme = localStorage.getItem('theme') || 'light';
-body.className = `${currentTheme}-mode`;
-updateThemeIcon();
+const themeToggle =
+    document.getElementById("themeToggle");
 
-function toggleTheme() {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    body.className = `${currentTheme}-mode`;
-    localStorage.setItem('theme', currentTheme);
-    updateThemeIcon();
+const menuToggle =
+    document.getElementById("menuToggle");
+
+const navMenu =
+    document.getElementById("navMenu");
+
+const navLinks =
+    document.querySelectorAll(".nav-link");
+
+const scrollProgress =
+    document.getElementById("scrollProgress");
+
+const projectsGrid =
+    document.getElementById("projectsGrid");
+
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
+function getStoredTheme() {
+
+    return (
+        localStorage.getItem("portfolio-theme") ||
+        "dark"
+    );
+
 }
 
-function updateThemeIcon() {
-    const icon = themeToggle.querySelector('i');
-    if (currentTheme === 'dark') {
-        icon.className = 'fas fa-sun';
-    } else {
-        icon.className = 'fas fa-moon';
+
+function setTheme(theme) {
+
+    body.classList.remove(
+        "dark-mode",
+        "light-mode"
+    );
+
+    body.classList.add(
+        `${theme}-mode`
+    );
+
+    localStorage.setItem(
+        "portfolio-theme",
+        theme
+    );
+
+
+    if (themeToggle) {
+
+        const icon =
+            themeToggle.querySelector("i");
+
+        if (icon) {
+
+            icon.className =
+                theme === "dark"
+                    ? "fas fa-sun"
+                    : "fas fa-moon";
+
+        }
+
     }
+
 }
 
-// Mobile Navigation
-function toggleMobileMenu() {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-    body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+
+setTheme(
+    getStoredTheme()
+);
+
+
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const newTheme =
+                body.classList.contains("dark-mode")
+                    ? "light"
+                    : "dark";
+
+            setTheme(newTheme);
+
+        }
+    );
+
 }
 
-function closeMobileMenu() {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-    body.style.overflow = '';
-}
 
-// Smooth Scrolling for Navigation Links
-function smoothScrollTo(targetId) {
-    const target = document.querySelector(targetId);
-    if (target) {
-        const offsetTop = target.offsetTop - 70; // Account for fixed navbar
-        window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-        });
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+function closeMenu() {
+
+    if (!navMenu || !menuToggle) {
+        return;
     }
+
+
+    navMenu.classList.remove("active");
+
+    menuToggle.classList.remove("active");
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    body.classList.remove(
+        "menu-open"
+    );
+
 }
 
-// Intersection Observer for Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            
-            // Animate skill progress bars
-            if (entry.target.classList.contains('skill-progress')) {
-                const width = entry.target.getAttribute('data-width');
-                entry.target.style.width = `${width}%`;
+function toggleMenu() {
+
+    if (!navMenu || !menuToggle) {
+        return;
+    }
+
+
+    const isOpen =
+        navMenu.classList.toggle(
+            "active"
+        );
+
+
+    menuToggle.classList.toggle(
+        "active",
+        isOpen
+    );
+
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+
+
+    body.classList.toggle(
+        "menu-open",
+        isOpen
+    );
+
+}
+
+
+if (menuToggle) {
+
+    menuToggle.addEventListener(
+        "click",
+        toggleMenu
+    );
+
+}
+
+
+navLinks.forEach(
+    link => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                closeMenu();
+
             }
-        }
-    });
-}, observerOptions);
+        );
 
-// Observe elements for animations
-document.addEventListener('DOMContentLoaded', () => {
-    // Add fade-in class to elements
-    const fadeElements = document.querySelectorAll('.work-item, .skill-item, .contact-item, .about-content, .section-header');
-    fadeElements.forEach(el => {
-        el.classList.add('fade-in');
-        observer.observe(el);
-    });
-
-    // Observe skill progress bars
-    skillProgressBars.forEach(bar => {
-        observer.observe(bar);
-    });
-});
-
-// Parallax Effect for Floating Elements
-function handleParallax() {
-    const floatingElements = document.querySelectorAll('.floating-element');
-    const scrolled = window.pageYOffset;
-    
-    floatingElements.forEach(element => {
-        const speed = element.getAttribute('data-speed') || 1;
-        const yPos = -(scrolled * speed * 0.5);
-        element.style.transform = `translateY(${yPos}px)`;
-    });
-}
-
-// Navbar Background on Scroll
-function handleNavbarScroll() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'var(--bg-glass-dark)';
-        navbar.style.backdropFilter = 'blur(20px)';
-    } else {
-        navbar.style.background = 'var(--bg-glass)';
-        navbar.style.backdropFilter = 'blur(20px)';
     }
-}
+);
 
-// Active Navigation Link
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const scrollPos = window.scrollY + 100;
 
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute('id');
-        const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+/* =========================================================
+   SCROLL PROGRESS
+   ========================================================= */
 
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            if (navLink) navLink.classList.add('active');
-        }
-    });
-}
+function updateScrollProgress() {
 
-// Form Handling
-function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-
-    // Basic validation
-    if (!name || !email || !subject || !message) {
-        showNotification('Please fill in all fields', 'error');
+    if (!scrollProgress) {
         return;
     }
 
-    if (!isValidEmail(email)) {
-        showNotification('Please enter a valid email address', 'error');
+
+    const scrollTop =
+        window.scrollY;
+
+
+    const documentHeight =
+        document.documentElement
+            .scrollHeight -
+        window.innerHeight;
+
+
+    if (documentHeight <= 0) {
         return;
     }
 
-    // Simulate form submission
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
 
-    setTimeout(() => {
-        showNotification('Message sent successfully!', 'success');
-        contactForm.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
+    const percentage =
+        (scrollTop /
+            documentHeight) *
+        100;
+
+
+    scrollProgress.style.width =
+        `${percentage}%`;
+
 }
 
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
 
-// Notification System
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        color: white;
-        font-weight: 500;
-        z-index: 10000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-        word-wrap: break-word;
-    `;
+/* =========================================================
+   ACTIVE NAVIGATION
+   ========================================================= */
 
-    // Set background color based on type
-    const colors = {
-        success: 'var(--accent-color)',
-        error: '#ef4444',
-        info: 'var(--primary-color)'
-    };
-    notification.style.background = colors[type] || colors.info;
+function updateActiveNavigation() {
 
-    document.body.appendChild(notification);
+    const sections =
+        document.querySelectorAll(
+            "main section[id]"
+        );
 
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
 
-    // Remove after 5 seconds
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 5000);
-}
+    const scrollPosition =
+        window.scrollY + 160;
 
-// Typing Animation for Hero Text
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
+
+    let currentSection = "";
+
+
+    sections.forEach(
+        section => {
+
+            if (
+                scrollPosition >=
+                    section.offsetTop
+            ) {
+
+                currentSection =
+                    section.id;
+
+            }
+
         }
-    }
-    type();
+    );
+
+
+    navLinks.forEach(
+        link => {
+
+            const href =
+                link.getAttribute(
+                    "href"
+                );
+
+
+            link.classList.toggle(
+                "active",
+                href ===
+                    `#${currentSection}`
+            );
+
+        }
+    );
+
 }
 
-// Initialize typing animation when page loads
-window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        heroTitle.textContent = '';
-        
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 80);
-        }, 500);
-    }
-});
 
-// Work Item Hover Effects
-function initializeWorkItemEffects() {
-    const workItems = document.querySelectorAll('.work-item');
-    
-    workItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
+/* =========================================================
+   SCROLL HANDLER
+   ========================================================= */
+
+let ticking = false;
+
+
+function handleScroll() {
+
+    if (ticking) {
+        return;
+    }
+
+
+    window.requestAnimationFrame(
+        () => {
+
+            updateScrollProgress();
+
+            updateActiveNavigation();
+
+            ticking = false;
+
+        }
+    );
+
+
+    ticking = true;
+
 }
 
-// Skill Progress Animation
-function animateSkillBars() {
-    skillProgressBars.forEach(bar => {
-        const width = bar.getAttribute('data-width');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    bar.style.width = `${width}%`;
-                    observer.unobserve(bar);
+
+window.addEventListener(
+    "scroll",
+    handleScroll,
+    { passive: true }
+);
+
+
+/* =========================================================
+   INTERSECTION OBSERVER
+   ========================================================= */
+
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if (
+                        !entry.isIntersecting
+                    ) {
+                        return;
+                    }
+
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
                 }
-            });
-        }, { threshold: 0.5 });
-        
-        observer.observe(bar);
-    });
-}
+            );
 
-// Floating Elements Animation
-function initializeFloatingElements() {
-    const floatingElements = document.querySelectorAll('.floating-element');
-    
-    floatingElements.forEach((element, index) => {
-        element.style.animationDelay = `${index * 2}s`;
-    });
-}
+        },
+        {
+            threshold: 0.08,
 
-// Scroll Progress Indicator
-function createScrollProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.className = 'scroll-progress';
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 3px;
-        background: var(--gradient-primary);
-        z-index: 10001;
-        transition: width 0.1s ease;
-    `;
-    
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset;
-        const docHeight = document.body.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        progressBar.style.width = scrollPercent + '%';
-    });
-}
-
-// Performance Optimization: Throttle scroll events
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
+            rootMargin:
+                "0px 0px -40px 0px"
         }
-    }
+    );
+
+
+function observeRevealElements() {
+
+    document
+        .querySelectorAll(
+            ".work-item, .skill-card, .about-main, .about-stats, .contact-box"
+        )
+        .forEach(
+            element => {
+
+                element.classList.add(
+                    "fade-in"
+                );
+
+                revealObserver.observe(
+                    element
+                );
+
+            }
+        );
+
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all features
-    initializeWorkItemEffects();
-    animateSkillBars();
-    initializeFloatingElements();
-    createScrollProgress();
-    
-    // Add active class to nav links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            smoothScrollTo(targetId);
-            closeMobileMenu();
-        });
-    });
-});
 
-// Scroll event listeners with throttling
-window.addEventListener('scroll', throttle(() => {
-    handleNavbarScroll();
-    updateActiveNavLink();
-    handleParallax();
-}, 16)); // ~60fps
+/* =========================================================
+   GITHUB PROJECTS
+   ========================================================= */
 
-// Theme toggle
-themeToggle.addEventListener('click', toggleTheme);
+async function loadGitHubProjects() {
 
-// Mobile menu toggle
-hamburger.addEventListener('click', toggleMobileMenu);
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-        closeMobileMenu();
+    if (!projectsGrid) {
+        return;
     }
-});
 
-// Form submission
-contactForm.addEventListener('submit', handleFormSubmit);
 
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeMobileMenu();
+    showLoading();
+
+
+    const apiUrl =
+        "https://api.github.com/search/repositories" +
+        `?q=user:${encodeURIComponent(
+            GITHUB_USERNAME
+        )}+topic:${encodeURIComponent(
+            PORTFOLIO_TOPIC
+        )}` +
+        "&sort=updated" +
+        "&order=desc" +
+        `&per_page=${MAX_PROJECTS}`;
+
+
+    try {
+
+        const response =
+            await fetch(
+                apiUrl,
+                {
+                    headers: {
+                        Accept:
+                            "application/vnd.github+json"
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `GitHub API error: ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        let repositories =
+            Array.isArray(data.items)
+                ? data.items
+                : [];
+
+
+        repositories =
+            repositories.filter(
+                repository =>
+                    repository.name
+                        .toLowerCase() !==
+                    "portfolio"
+            );
+
+
+        repositories.sort(
+            (a, b) => {
+
+                const aFeatured =
+                    Array.isArray(a.topics) &&
+                    a.topics.includes(
+                        FEATURED_TOPIC
+                    );
+
+
+                const bFeatured =
+                    Array.isArray(b.topics) &&
+                    b.topics.includes(
+                        FEATURED_TOPIC
+                    );
+
+
+                if (
+                    aFeatured !==
+                    bFeatured
+                ) {
+
+                    return bFeatured
+                        ? 1
+                        : -1;
+
+                }
+
+
+                return (
+                    new Date(
+                        b.updated_at
+                    ) -
+                    new Date(
+                        a.updated_at
+                    )
+                );
+
+            }
+        );
+
+
+        if (
+            repositories.length === 0
+        ) {
+
+            showEmptyState();
+
+            return;
+
+        }
+
+
+        projectsGrid.innerHTML = "";
+
+
+        repositories.forEach(
+            (repository, index) => {
+
+                projectsGrid.appendChild(
+                    createProjectCard(
+                        repository,
+                        index
+                    )
+                );
+
+            }
+        );
+
+
+        initializeProjectLinks();
+
+        observeRevealElements();
+
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load GitHub projects:",
+            error
+        );
+
+
+        showErrorState();
+
     }
-});
 
-// Preload critical images
-function preloadImages() {
-    const imageUrls = [
-        'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop',
-        'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=400&fit=crop',
-        'images/profile-photo.jpg'
-    ];
-
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.src = url;
-    });
 }
 
-// Initialize preloading
-preloadImages();
 
-// Service Worker Registration (for PWA capabilities)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    if (!newWorker) return;
+/* =========================================================
+   PROJECT CARD
+   ========================================================= */
 
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
-                            window.location.reload();
+function createProjectCard(
+    repository,
+    index
+) {
+
+    const article =
+        document.createElement(
+            "article"
+        );
+
+
+    article.className =
+        "work-item";
+
+
+    const topics =
+        Array.isArray(
+            repository.topics
+        )
+            ? repository.topics.filter(
+                topic =>
+                    topic !==
+                        PORTFOLIO_TOPIC &&
+                    topic !==
+                        FEATURED_TOPIC
+            )
+            : [];
+
+
+    if (
+        topics.length === 0 &&
+        repository.language
+    ) {
+
+        topics.push(
+            repository.language
+        );
+
+    }
+
+
+    const visibleTopics =
+        topics.slice(0, 4);
+
+
+    const tags =
+        visibleTopics
+            .map(
+                topic =>
+                    `<span>${escapeHTML(
+                        formatTopic(topic)
+                    )}</span>`
+            )
+            .join("");
+
+
+    const isFeatured =
+        Array.isArray(
+            repository.topics
+        ) &&
+        repository.topics.includes(
+            FEATURED_TOPIC
+        );
+
+
+    const imageUrl =
+        `https://opengraph.githubassets.com/1/` +
+        `${GITHUB_USERNAME}/` +
+        `${repository.name}`;
+
+
+    const fallbackImage =
+        "https://images.unsplash.com/" +
+        "photo-1555066931-4365d14bab8c" +
+        "?w=1200&h=800&fit=crop";
+
+
+    const description =
+        repository.description ||
+        "A software project developed by Anil Rijal.";
+
+
+    const homepage =
+        typeof repository.homepage ===
+            "string" &&
+        repository.homepage.trim()
+            ? repository.homepage.trim()
+            : null;
+
+
+    article.innerHTML = `
+
+        <div class="work-image">
+
+            <img
+                src="${imageUrl}"
+                alt="${escapeHTML(
+                    repository.name
+                )}"
+                loading="${
+                    index < 2
+                        ? "eager"
+                        : "lazy"
+                }"
+                onerror="
+                    this.onerror = null;
+                    this.src = '${fallbackImage}';
+                "
+            >
+
+
+            <div class="work-overlay">
+
+                <div class="work-content">
+
+
+                    <div class="project-title-row">
+
+                        <h3>
+                            ${escapeHTML(
+                                formatProjectName(
+                                    repository.name
+                                )
+                            )}
+                        </h3>
+
+                        ${
+                            isFeatured
+                                ? `
+                                    <span class="featured-badge">
+                                        Featured
+                                    </span>
+                                `
+                                : ""
                         }
-                    });
-                });
 
-                registration.update();
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
+                    </div>
+
+
+                    <p>
+                        ${escapeHTML(
+                            description
+                        )}
+                    </p>
+
+
+                    ${
+                        tags
+                            ? `
+                                <div class="work-tags">
+                                    ${tags}
+                                </div>
+                            `
+                            : ""
+                    }
+
+
+                    <div class="project-links">
+
+                        <a
+                            href="${escapeHTML(
+                                repository.html_url
+                            )}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="project-link"
+                            data-external="true"
+                        >
+
+                            <i class="fab fa-github"></i>
+
+                            GitHub
+
+                        </a>
+
+
+                        ${
+                            homepage
+                                ? `
+                                    <a
+                                        href="${escapeHTML(
+                                            homepage
+                                        )}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="project-link"
+                                        data-external="true"
+                                    >
+
+                                        <i class="fas fa-arrow-up-right-from-square"></i>
+
+                                        Live Demo
+
+                                    </a>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    return article;
+
 }
 
-// Performance monitoring
-window.addEventListener('load', () => {
-    // Log performance metrics
-    if ('performance' in window) {
-        const perfData = performance.getEntriesByType('navigation')[0];
-        console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+
+/* =========================================================
+   PROJECT FORMATTING
+   ========================================================= */
+
+function formatProjectName(
+    name
+) {
+
+    return name
+        .replace(
+            /[-_]+/g,
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            character =>
+                character.toUpperCase()
+        );
+
+}
+
+
+function formatTopic(
+    topic
+) {
+
+    return topic
+        .replace(
+            /[-_]+/g,
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            character =>
+                character.toUpperCase()
+        );
+
+}
+
+
+/* =========================================================
+   HTML ESCAPING
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.textContent =
+        value ?? "";
+
+
+    return element.innerHTML;
+
+}
+
+
+/* =========================================================
+   PROJECT STATES
+   ========================================================= */
+
+function showLoading() {
+
+    projectsGrid.innerHTML = `
+
+        <div class="projects-loading">
+
+            <div class="loading-spinner"></div>
+
+            <p>
+                Loading projects...
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+function showEmptyState() {
+
+    projectsGrid.innerHTML = `
+
+        <div class="projects-message">
+
+            <i class="fab fa-github"></i>
+
+            <h3>
+                No portfolio projects yet
+            </h3>
+
+            <p>
+                Add the
+                <strong>portfolio</strong>
+                topic to a GitHub repository
+                to display it here.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+function showErrorState() {
+
+    projectsGrid.innerHTML = `
+
+        <div class="projects-message">
+
+            <i class="fas fa-circle-exclamation"></i>
+
+            <h3>
+                Projects unavailable
+            </h3>
+
+            <p>
+                GitHub could not be reached.
+                Please try again.
+            </p>
+
+            <button
+                type="button"
+                class="button button-secondary project-retry"
+            >
+                Try again
+            </button>
+
+        </div>
+
+    `;
+
+
+    const retryButton =
+        projectsGrid.querySelector(
+            ".project-retry"
+        );
+
+
+    if (retryButton) {
+
+        retryButton.addEventListener(
+            "click",
+            loadGitHubProjects
+        );
+
     }
-});
 
-// Error handling
-window.addEventListener('error', (e) => {
-    console.error('Global error:', e.error);
-});
+}
 
-// Unhandled promise rejection
-window.addEventListener('unhandledrejection', (e) => {
-    console.error('Unhandled promise rejection:', e.reason);
-});
 
-// Export functions for potential external use
+/* =========================================================
+   EXTERNAL LINKS
+   ========================================================= */
+
+function initializeProjectLinks() {
+
+    document
+        .querySelectorAll(
+            '[data-external="true"]'
+        )
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        console.log(
+                            "Opening:",
+                            link.href
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        observeRevealElements();
+
+        loadGitHubProjects();
+
+        updateScrollProgress();
+
+        updateActiveNavigation();
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PUBLIC API
+   ========================================================= */
+
 window.PortfolioApp = {
-    toggleTheme,
-    smoothScrollTo,
-    showNotification,
-    typeWriter
-}; 
+
+    loadGitHubProjects,
+
+    setTheme,
+
+    toggleMenu,
+
+    closeMenu
+
+};

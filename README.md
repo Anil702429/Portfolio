@@ -55,27 +55,27 @@ A stunning, modern portfolio website for Anil Rijal - CSIT Student, Graphic Desi
 3. **Customize** the content to match your portfolio
 
 ### File Structure
-```
+
 Portfolio/
 ├── index.html          # Main HTML structure
 ├── styles.css          # All styling and animations
 ├── script.js           # JavaScript functionality
 └── README.md           # This documentation
-```
+
 
 ## 🎨 Customization
 
 ### Colors & Themes
 The website uses CSS custom properties for easy theming. Modify the `:root` variables in `styles.css`:
 
-```css
+css
 :root {
     --primary-color: #6366f1;
     --secondary-color: #f59e0b;
     --accent-color: #10b981;
     /* ... more variables */
 }
-```
+
 
 ### Content Updates
 - **Personal Information**: Already customized for Anil Rijal - CSIT Student from Nepal

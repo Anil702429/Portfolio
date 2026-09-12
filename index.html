@@ -2,458 +2,912 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anil Rijal | Django Developer</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#6366f1">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Anil Rijal | Python & Django Developer</title>
+
+    <meta
+        name="description"
+        content="Anil Rijal is a Python and Django developer building reliable backends, REST APIs and production-ready web applications."
+    >
+
+    <meta
+        name="author"
+        content="Anil Rijal"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b12"
+    >
+
+    <link
+        rel="icon"
+        href="images/profile-photo.jpg"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
 </head>
-<body class="light-mode">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="logo-text">Anil Rijal</span>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#work" class="nav-link">Work</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#skills" class="nav-link">Skills</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="nav-toggle">
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="animated-text">Anil Rijal</span>
-                    <span class="animated-text delay-1">Django Developer</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Python Backend Developer | REST APIs | Scalable Web Applications
-                </p>
-                <div class="hero-buttons">
-                    <a href="#work" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                    <a href="https://www.youtube.com/@anilrijal" class="btn btn-secondary" target="_blank">YouTube Channel</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="floating-elements">
-                    <div class="floating-element" data-speed="2"></div>
-                    <div class="floating-element" data-speed="1.5"></div>
-                    <div class="floating-element" data-speed="3"></div>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
 
-    <!-- Work Section -->
-    <section id="work" class="work">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Work</h2>
-                <p class="section-subtitle">Django-powered backends, REST APIs, and full-stack web applications</p>
-            </div>
-            <div class="work-grid">
-                <div class="work-item" data-category="api">
-                    <div class="work-image">
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop" alt="Django REST API">
-                        <div class="work-overlay">
-                            <div class="work-content">
-                                <h3>Django REST API</h3>
-                                <p>Scalable RESTful API with JWT authentication, role-based access, and PostgreSQL</p>
-                                <div class="work-tags">
-                                    <span>Django</span>
-                                    <span>DRF</span>
-                                    <span>PostgreSQL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-item" data-category="web">
-                    <div class="work-image">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Django E-commerce Platform">
-                        <div class="work-overlay">
-                            <div class="work-content">
-                                <h3>E-commerce Platform</h3>
-                                <p>Full-featured online store with cart, checkout, order management, and admin dashboard</p>
-                                <div class="work-tags">
-                                    <span>Django</span>
-                                    <span>Stripe</span>
-                                    <span>Celery</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-item" data-category="cms">
-                    <div class="work-image">
-                        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop" alt="Django Blog CMS">
-                        <div class="work-overlay">
-                            <div class="work-content">
-                                <h3>Blog & CMS System</h3>
-                                <p>Content management platform with custom Django admin, rich text editing, and SEO tools</p>
-                                <div class="work-tags">
-                                    <span>Django</span>
-                                    <span>Admin</span>
-                                    <span>PostgreSQL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-item" data-category="realtime">
-                    <div class="work-image">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=400&fit=crop" alt="Django Task Manager">
-                        <div class="work-overlay">
-                            <div class="work-content">
-                                <h3>Task Management App</h3>
-                                <p>Collaborative task tracker with real-time updates, notifications, and team workspaces</p>
-                                <div class="work-tags">
-                                    <span>Django</span>
-                                    <span>Channels</span>
-                                    <span>Redis</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<body class="dark-mode">
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">About Me</h2>
-                    <p class="about-description">
-                        I'm Anil Rijal — a Django developer from Nepal who builds robust, scalable web applications with Python. I specialize in REST APIs, database design, authentication systems, and Django admin customization. From MVPs to production-ready backends, I focus on clean architecture, secure code, and maintainable solutions that solve real business problems.
+    <!-- =====================================================
+         PAGE PROGRESS
+         ===================================================== -->
+
+    <div
+        class="scroll-progress"
+        id="scrollProgress"
+    ></div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+         ===================================================== -->
+
+    <header class="site-header">
+
+        <nav class="navbar">
+
+            <div class="container nav-container">
+
+                <a
+                    href="#home"
+                    class="brand"
+                    aria-label="Anil Rijal home"
+                >
+
+                    <span class="brand-mark">
+                        AR
+                    </span>
+
+                    <span class="brand-name">
+                        Anil Rijal
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="nav-menu"
+                    id="navMenu"
+                >
+
+                    <a
+                        href="#home"
+                        class="nav-link active"
+                    >
+                        Home
+                    </a>
+
+                    <a
+                        href="#work"
+                        class="nav-link"
+                    >
+                        Work
+                    </a>
+
+                    <a
+                        href="#about"
+                        class="nav-link"
+                    >
+                        About
+                    </a>
+
+                    <a
+                        href="#skills"
+                        class="nav-link"
+                    >
+                        Skills
+                    </a>
+
+                    <a
+                        href="#contact"
+                        class="nav-link"
+                    >
+                        Contact
+                    </a>
+
+                </div>
+
+
+                <div class="nav-actions">
+
+                    <a
+                        href="https://github.com/Anil702429"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="nav-github"
+                        aria-label="GitHub"
+                    >
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        id="themeToggle"
+                        aria-label="Toggle theme"
+                    >
+                        <i class="fas fa-sun"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="menu-toggle"
+                        id="menuToggle"
+                        aria-label="Open navigation"
+                        aria-expanded="false"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section
+            id="home"
+            class="hero"
+        >
+
+            <div class="hero-glow hero-glow-one"></div>
+
+            <div class="hero-glow hero-glow-two"></div>
+
+
+            <div class="container hero-container">
+
+
+                <div class="hero-copy">
+
+                    <div class="availability">
+
+                        <span class="availability-dot"></span>
+
+                        <span>
+                            Available for opportunities
+                        </span>
+
+                    </div>
+
+
+                    <p class="eyebrow">
+                        PYTHON / DJANGO DEVELOPER
                     </p>
+
+
+                    <h1 class="hero-title">
+
+                        Building reliable
+                        <span class="accent-text">
+                            backends
+                        </span>
+                        and digital products.
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        I build scalable web applications, REST APIs,
+                        authentication systems and backend infrastructure
+                        with Python and Django.
+
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#work"
+                            class="button button-primary"
+                        >
+
+                            View my work
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <a
+                            href="https://github.com/Anil702429"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="button button-secondary"
+                        >
+
+                            <i class="fab fa-github"></i>
+
+                            GitHub
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-stack">
+
+                        <span>Python</span>
+                        <span>Django</span>
+                        <span>DRF</span>
+                        <span>PostgreSQL</span>
+                        <span>Docker</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Profile -->
+
+                <div class="hero-profile">
+
+                    <div class="profile-frame">
+
+                        <div class="profile-glow"></div>
+
+                        <div class="profile-image-wrapper">
+
+                            <img
+                                src="images/profile-photo.jpg"
+                                alt="Anil Rijal"
+                                class="profile-image"
+                            >
+
+                        </div>
+
+
+                        <div class="profile-card profile-card-top">
+
+                            <span class="profile-card-icon">
+                                <i class="fas fa-code"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    Backend
+                                </strong>
+
+                                <small>
+                                    Engineering
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-card profile-card-bottom">
+
+                            <span class="profile-card-icon">
+                                <i class="fas fa-layer-group"></i>
+                            </span>
+
+                            <div>
+                                <strong>
+                                    10+
+                                </strong>
+
+                                <small>
+                                    Projects
+                                </small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-bottom">
+
+                <div class="container hero-bottom-inner">
+
+                    <span>
+                        Based in Nepal
+                    </span>
+
+                    <span class="hero-line"></span>
+
+                    <span>
+                        Open to remote work
+                    </span>
+
+                    <a href="#work">
+                        Explore work
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             WORK
+             ================================================= -->
+
+        <section
+            id="work"
+            class="section work-section"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            01 / SELECTED WORK
+                        </span>
+
+                        <h2 class="section-title">
+                            Projects that solve
+                            <span>real problems.</span>
+                        </h2>
+
+                    </div>
+
+
+                    <p class="section-description">
+
+                        A selection of projects from my GitHub.
+                        New projects are automatically added when
+                        I mark their repository for the portfolio.
+
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="work-grid"
+                    id="projectsGrid"
+                >
+
+                    <div class="projects-loading">
+
+                        <div class="loading-spinner"></div>
+
+                        <p>
+                            Loading projects...
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ABOUT
+             ================================================= -->
+
+        <section
+            id="about"
+            class="section about-section"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            02 / ABOUT
+                        </span>
+
+                        <h2 class="section-title">
+                            Engineering with
+                            <span>purpose.</span>
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="about-layout">
+
+
+                    <div class="about-main">
+
+                        <p class="about-lead">
+
+                            I'm Anil Rijal, a Python and Django developer
+                            focused on building dependable software that
+                            is clean, maintainable and ready to grow.
+
+                        </p>
+
+
+                        <p>
+
+                            My work focuses primarily on backend engineering:
+                            designing APIs, database architectures,
+                            authentication systems, administrative interfaces
+                            and integrations that support real applications.
+
+                        </p>
+
+
+                        <p>
+
+                            I enjoy taking an idea from an initial concept
+                            through implementation, deployment and iteration.
+                            Whether it's a Django application, REST API or
+                            supporting infrastructure, I care about the
+                            details that make software reliable.
+
+                        </p>
+
+
+                        <a
+                            href="#contact"
+                            class="text-link"
+                        >
+
+                            Let's work together
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+
                     <div class="about-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">Django</span>
-                            <span class="stat-label">Specialist</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">3+</span>
-                            <span class="stat-label">Years Experience</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">10+</span>
-                            <span class="stat-label">Projects Built</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="image-container">
-                        <img src="images/profile-photo.jpg?v=1" alt="Anil Rijal - Profile Photo">
-                        <div class="image-overlay"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Skills & Expertise</h2>
-                <p class="section-subtitle">Python, Django, and the tools I use to ship production-ready backends</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Django & Python</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Python</span>
-                                <span class="skill-percentage">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Django</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="92"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Django REST Framework</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Celery & Async Tasks</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Databases & ORM</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">PostgreSQL</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Django ORM</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="92"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Redis</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">MySQL</span>
-                                <span class="skill-percentage">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Frontend & Integration</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">HTML/CSS</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">JavaScript</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Bootstrap / Tailwind</span>
-                                <span class="skill-percentage">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="88"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">REST API Integration</span>
-                                <span class="skill-percentage">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="92"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>DevOps & Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Git & GitHub</span>
-                                <span class="skill-percentage">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Docker</span>
-                                <span class="skill-percentage">82%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="82"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">Linux / Deployment</span>
-                                <span class="skill-percentage">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-info">
-                                <span class="skill-name">AWS / Heroku</span>
-                                <span class="skill-percentage">78%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="78"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Need a Django backend or full-stack web app? Let's talk.</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                                         <div class="contact-item">
-                         <div class="contact-icon">
-                             <i class="fas fa-envelope"></i>
-                         </div>
-                         <div class="contact-details">
-                             <h3>Email</h3>
-                             <p>anilrijal980@gmail.com</p>
-                         </div>
-                     </div>
-                     <div class="contact-item">
-                         <div class="contact-icon">
-                             <i class="fas fa-phone"></i>
-                         </div>
-                         <div class="contact-details">
-                             <h3>Phone</h3>
-                             <p>+977 97********</p>
-                         </div>
-                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Location</h3>
-                            <p>Nepal</p>
-                        </div>
-                    </div>
-                </div>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <div class="input-container">
-                            <input type="text" id="name" required>
-                            <label for="name">Your Name</label>
-                            <div class="input-line"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-container">
-                            <input type="email" id="email" required>
-                            <label for="email">Your Email</label>
-                            <div class="input-line"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-container">
-                            <input type="text" id="subject" required>
-                            <label for="subject">Subject</label>
-                            <div class="input-line"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-container">
-                            <textarea id="message" rows="5" required></textarea>
-                            <label for="message">Your Message</label>
-                            <div class="input-line"></div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
+                        <div class="stat">
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-text">
-                    <p>&copy; 2026 Anil Rijal. All rights reserved.</p>
+                            <span class="stat-value">
+                                3+
+                            </span>
+
+                            <span class="stat-label">
+                                Years building
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span class="stat-value">
+                                10+
+                            </span>
+
+                            <span class="stat-label">
+                                Projects
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span class="stat-value">
+                                Python
+                            </span>
+
+                            <span class="stat-label">
+                                Primary language
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span class="stat-value">
+                                Django
+                            </span>
+
+                            <span class="stat-label">
+                                Core framework
+                            </span>
+
+                        </div>
+
+                    </div>
+
                 </div>
-                                 <div class="footer-social">
-                     <a href="https://youtube.com/@echoverse-y2i?si=Z447JoqxhIn5Xv1t" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
-                     <a href="https://www.instagram.com/anilrijal980?igsh=NWU0cTVlemJkd2Ru" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
-                     <a href="https://github.com/Anil702429" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
-                     <a href="https://www.linkedin.com/in/anil-rijal-84559124b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
-                 </div>
+
             </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SKILLS
+             ================================================= -->
+
+        <section
+            id="skills"
+            class="section skills-section"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            03 / EXPERTISE
+                        </span>
+
+                        <h2 class="section-title">
+                            Technical
+                            <span>toolkit.</span>
+                        </h2>
+
+                    </div>
+
+
+                    <p class="section-description">
+
+                        The technologies I use to design, build
+                        and deploy applications.
+
+                    </p>
+
+                </div>
+
+
+                <div class="skills-grid">
+
+
+                    <article class="skill-card">
+
+                        <span class="skill-number">
+                            01
+                        </span>
+
+                        <div class="skill-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+
+                        <h3>
+                            Backend
+                        </h3>
+
+                        <p>
+                            Application logic, APIs,
+                            authentication and background processing.
+                        </p>
+
+                        <div class="skill-tags">
+
+                            <span>Python</span>
+                            <span>Django</span>
+                            <span>DRF</span>
+                            <span>Celery</span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="skill-card">
+
+                        <span class="skill-number">
+                            02
+                        </span>
+
+                        <div class="skill-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+
+                        <h3>
+                            Data
+                        </h3>
+
+                        <p>
+                            Relational databases, ORM design,
+                            caching and data modeling.
+                        </p>
+
+                        <div class="skill-tags">
+
+                            <span>PostgreSQL</span>
+                            <span>MySQL</span>
+                            <span>Redis</span>
+                            <span>Django ORM</span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="skill-card">
+
+                        <span class="skill-number">
+                            03
+                        </span>
+
+                        <div class="skill-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+
+                        <h3>
+                            DevOps
+                        </h3>
+
+                        <p>
+                            Containers, Linux environments,
+                            deployment and version control.
+                        </p>
+
+                        <div class="skill-tags">
+
+                            <span>Docker</span>
+                            <span>Linux</span>
+                            <span>Git</span>
+                            <span>Deployment</span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="skill-card">
+
+                        <span class="skill-number">
+                            04
+                        </span>
+
+                        <div class="skill-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+
+                        <h3>
+                            Frontend
+                        </h3>
+
+                        <p>
+                            Responsive interfaces and integration
+                            between frontend and backend systems.
+                        </p>
+
+                        <div class="skill-tags">
+
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>Tailwind</span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTACT
+             ================================================= -->
+
+        <section
+            id="contact"
+            class="section contact-section"
+        >
+
+            <div class="container">
+
+
+                <div class="contact-box">
+
+
+                    <div class="contact-copy">
+
+                        <span class="section-label">
+                            04 / CONTACT
+                        </span>
+
+                        <h2>
+                            Have a project
+                            <span>in mind?</span>
+                        </h2>
+
+                        <p>
+
+                            Whether you need a Django application,
+                            REST API or backend system, I'd be happy
+                            to discuss what you're building.
+
+                        </p>
+
+
+                        <a
+                            href="mailto:anilrijal980@gmail.com"
+                            class="contact-email"
+                        >
+
+                            anilrijal980@gmail.com
+
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="contact-actions">
+
+                        <a
+                            href="mailto:anilrijal980@gmail.com"
+                            class="button button-primary"
+                        >
+
+                            Start a conversation
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <div class="social-links">
+
+                            <a
+                                href="https://github.com/Anil702429"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub"
+                            >
+                                <i class="fab fa-github"></i>
+                            </a>
+
+                            <a
+                                href="https://www.linkedin.com/in/anil-rijal-84559124b/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                            >
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+
+                            <a
+                                href="https://www.instagram.com/anilrijal980/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                            >
+                                <i class="fab fa-instagram"></i>
+                            </a>
+
+                            <a
+                                href="https://youtube.com/@echoverse-y2i"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="YouTube"
+                            >
+                                <i class="fab fa-youtube"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-inner">
+
+            <div>
+
+                <a
+                    href="#home"
+                    class="footer-brand"
+                >
+                    Anil Rijal
+                </a>
+
+                <p>
+                    Python & Django Developer
+                </p>
+
+            </div>
+
+
+            <div class="footer-right">
+
+                <span>
+                    © 2026 Anil Rijal
+                </span>
+
+                <a href="#home">
+                    Back to top
+                    <i class="fas fa-arrow-up"></i>
+                </a>
+
+            </div>
+
         </div>
+
     </footer>
 
+
     <script src="script.js"></script>
+
 </body>
-</html> 
+</html>

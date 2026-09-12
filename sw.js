@@ -6,9 +6,14 @@ const STATIC_ASSETS = [
     "/styles.css",
     "/script.js",
     "/manifest.json",
+
+    // PWA icons
     "/images/icon-192.png",
     "/images/icon-512.png",
-    "/images/icon-512-maskable.png"
+    "/images/icon-512-maskable.png",
+
+    // Portfolio profile image
+    "/images/profile-photo.jpg"
 ];
 
 // Install

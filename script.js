@@ -20,6 +20,25 @@ const MAX_PROJECTS = 20;
 
 
 /* =========================================================
+   PROJECT LIVE URLS
+   ========================================================= */
+
+/*
+ * Explicit live URLs for projects.
+ *
+ * These URLs take priority over the GitHub repository
+ * homepage field.
+ */
+
+const PROJECT_LIVE_URLS = {
+
+    nepcart:
+        "https://nepcart.anilrijal.info.np/"
+
+};
+
+
+/* =========================================================
    DOM
    ========================================================= */
 
@@ -211,7 +230,10 @@ function updateScrollProgress() {
         window.innerHeight;
 
     if (documentHeight <= 0) {
-        scrollProgress.style.width = "0%";
+
+        scrollProgress.style.width =
+            "0%";
+
         return;
     }
 
@@ -482,7 +504,8 @@ async function loadGitHubProjects() {
                     name: repo.name,
                     topics: repo.topics,
                     language: repo.language,
-                    url: repo.html_url
+                    url: repo.html_url,
+                    homepage: repo.homepage
                 })
             )
         );
@@ -689,13 +712,23 @@ function createProjectCard(
 
     /*
      * Live website.
+     *
+     * Explicit project URLs take priority
+     * over the GitHub repository homepage.
      */
 
+    const repositoryKey =
+        repository.name.toLowerCase();
+
+
     const homepage =
-        typeof repository.homepage === "string" &&
-        repository.homepage.trim()
-            ? repository.homepage.trim()
-            : null;
+        PROJECT_LIVE_URLS[repositoryKey] ||
+        (
+            typeof repository.homepage === "string" &&
+            repository.homepage.trim()
+                ? repository.homepage.trim()
+                : null
+        );
 
 
     /*

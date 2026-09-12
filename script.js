@@ -1,3 +1,5 @@
+console.log("PORTFOLIO SCRIPT LOADED");
+
 /* =========================================================
    ANIL RIJAL PORTFOLIO
    Professional Portfolio JavaScript

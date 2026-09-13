@@ -1,132 +1,87 @@
 console.log("PORTFOLIO SCRIPT LOADED");
 
-
 /* =========================================================
    PWA INSTALL
    ========================================================= */
 
 let deferredInstallPrompt = null;
 
-
 /*
  * Capture the browser install prompt.
  */
 window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
 
-    event.preventDefault();
+  deferredInstallPrompt = event;
 
-    deferredInstallPrompt = event;
+  console.log("🔥 beforeinstallprompt FIRED");
 
-    console.log(
-        "🔥 beforeinstallprompt FIRED"
-    );
+  const installButton = document.getElementById("installAppBtn");
 
-    const installButton =
-        document.getElementById("installAppBtn");
+  if (installButton) {
+    installButton.hidden = false;
 
-    if (installButton) {
-
-        installButton.hidden = false;
-
-        console.log(
-            "✅ Install App button enabled."
-        );
-
-    }
-
+    console.log("✅ Install App button enabled.");
+  }
 });
-
 
 /*
  * Handle Install App button.
  */
 document.addEventListener("click", async (event) => {
+  const installButton = event.target.closest("#installAppBtn");
 
-    const installButton =
-        event.target.closest("#installAppBtn");
+  if (!installButton) {
+    return;
+  }
 
+  console.log("🟢 Install App button clicked.");
 
-    if (!installButton) {
-        return;
-    }
+  /*
+   * Browser has not provided an install prompt.
+   */
+  if (!deferredInstallPrompt) {
+    console.warn("⚠️ No install prompt is currently available.");
 
+    return;
+  }
 
-    console.log(
-        "🟢 Install App button clicked."
-    );
+  /*
+   * Show browser installation dialog.
+   */
+  deferredInstallPrompt.prompt();
 
+  const result = await deferredInstallPrompt.userChoice;
 
-    /*
-     * Browser has not provided an install prompt.
-     */
-    if (!deferredInstallPrompt) {
+  console.log("PWA install choice:", result.outcome);
 
-        console.warn(
-            "⚠️ No install prompt is currently available."
-        );
+  /*
+   * The prompt can only be used once.
+   */
+  deferredInstallPrompt = null;
 
-        return;
-
-    }
-
-
-    /*
-     * Show browser installation dialog.
-     */
-    deferredInstallPrompt.prompt();
-
-
-    const result =
-        await deferredInstallPrompt.userChoice;
-
-
-    console.log(
-        "PWA install choice:",
-        result.outcome
-    );
-
-
-    /*
-     * The prompt can only be used once.
-     */
-    deferredInstallPrompt = null;
-
-
-    installButton.hidden = true;
-
+  installButton.hidden = true;
 });
-
 
 /*
  * App successfully installed.
  */
 window.addEventListener("appinstalled", () => {
+  console.log("✅ Portfolio PWA installed successfully.");
 
-    console.log(
-        "✅ Portfolio PWA installed successfully."
-    );
+  deferredInstallPrompt = null;
 
+  const installButton = document.getElementById("installAppBtn");
 
-    deferredInstallPrompt = null;
-
-
-    const installButton =
-        document.getElementById("installAppBtn");
-
-
-    if (installButton) {
-
-        installButton.hidden = true;
-
-    }
-
+  if (installButton) {
+    installButton.hidden = true;
+  }
 });
 
 /* =========================================================
    ANIL RIJAL PORTFOLIO
    Professional Portfolio JavaScript
    ========================================================= */
-
 
 /* =========================================================
    CONFIGURATION
@@ -140,6 +95,7 @@ const FEATURED_TOPIC = "featured";
 
 const MAX_PROJECTS = 20;
 
+let PROJECT_METADATA = {};
 
 /* =========================================================
    PROJECT LIVE URLS
@@ -153,12 +109,8 @@ const MAX_PROJECTS = 20;
  */
 
 const PROJECT_LIVE_URLS = {
-
-    nepcart:
-        "https://nepcart.anilrijal.info.np/"
-
+  nepcart: "https://nepcart.anilrijal.info.np/",
 };
-
 
 /* =========================================================
    DOM
@@ -166,257 +118,140 @@ const PROJECT_LIVE_URLS = {
 
 const body = document.body;
 
-const themeToggle =
-    document.getElementById("themeToggle");
+const themeToggle = document.getElementById("themeToggle");
 
-const menuToggle =
-    document.getElementById("menuToggle");
+const menuToggle = document.getElementById("menuToggle");
 
-const navMenu =
-    document.getElementById("navMenu");
+const navMenu = document.getElementById("navMenu");
 
-const navLinks =
-    document.querySelectorAll(".nav-link");
+const navLinks = document.querySelectorAll(".nav-link");
 
-const scrollProgress =
-    document.getElementById("scrollProgress");
+const scrollProgress = document.getElementById("scrollProgress");
 
-const projectsGrid =
-    document.getElementById("projectsGrid");
-
+const projectsGrid = document.getElementById("projectsGrid");
 
 /* =========================================================
    THEME
    ========================================================= */
 
 function getStoredTheme() {
-
-    return (
-        localStorage.getItem("portfolio-theme") ||
-        "dark"
-    );
-
+  return localStorage.getItem("portfolio-theme") || "dark";
 }
-
 
 function setTheme(theme) {
+  body.classList.remove("dark-mode", "light-mode");
 
-    body.classList.remove(
-        "dark-mode",
-        "light-mode"
-    );
+  body.classList.add(`${theme}-mode`);
 
-    body.classList.add(
-        `${theme}-mode`
-    );
+  localStorage.setItem("portfolio-theme", theme);
 
-    localStorage.setItem(
-        "portfolio-theme",
-        theme
-    );
+  if (themeToggle) {
+    const icon = themeToggle.querySelector("i");
 
-
-    if (themeToggle) {
-
-        const icon =
-            themeToggle.querySelector("i");
-
-        if (icon) {
-
-            icon.className =
-                theme === "dark"
-                    ? "fas fa-sun"
-                    : "fas fa-moon";
-
-        }
-
+    if (icon) {
+      icon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
     }
-
+  }
 }
 
-
-setTheme(
-    getStoredTheme()
-);
-
+setTheme(getStoredTheme());
 
 if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const newTheme = body.classList.contains("dark-mode") ? "light" : "dark";
 
-    themeToggle.addEventListener(
-        "click",
-        () => {
-
-            const newTheme =
-                body.classList.contains("dark-mode")
-                    ? "light"
-                    : "dark";
-
-            setTheme(newTheme);
-
-        }
-    );
-
+    setTheme(newTheme);
+  });
 }
-
 
 /* =========================================================
    MOBILE MENU
    ========================================================= */
 
 function closeMenu() {
+  if (!navMenu || !menuToggle) {
+    return;
+  }
 
-    if (!navMenu || !menuToggle) {
-        return;
-    }
+  navMenu.classList.remove("active");
 
-    navMenu.classList.remove("active");
+  menuToggle.classList.remove("active");
 
-    menuToggle.classList.remove("active");
+  menuToggle.setAttribute("aria-expanded", "false");
 
-    menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
-    );
-
-    body.classList.remove(
-        "menu-open"
-    );
-
+  body.classList.remove("menu-open");
 }
-
 
 function toggleMenu() {
+  if (!navMenu || !menuToggle) {
+    return;
+  }
 
-    if (!navMenu || !menuToggle) {
-        return;
-    }
+  const isOpen = navMenu.classList.toggle("active");
 
-    const isOpen =
-        navMenu.classList.toggle("active");
+  menuToggle.classList.toggle("active", isOpen);
 
-    menuToggle.classList.toggle(
-        "active",
-        isOpen
-    );
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
 
-    menuToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-
-    body.classList.toggle(
-        "menu-open",
-        isOpen
-    );
-
+  body.classList.toggle("menu-open", isOpen);
 }
-
 
 if (menuToggle) {
-
-    menuToggle.addEventListener(
-        "click",
-        toggleMenu
-    );
-
+  menuToggle.addEventListener("click", toggleMenu);
 }
 
-
-navLinks.forEach(
-    link => {
-
-        link.addEventListener(
-            "click",
-            closeMenu
-        );
-
-    }
-);
-
+navLinks.forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
 
 /* =========================================================
    SCROLL PROGRESS
    ========================================================= */
 
 function updateScrollProgress() {
+  if (!scrollProgress) {
+    return;
+  }
 
-    if (!scrollProgress) {
-        return;
-    }
+  const scrollTop = window.scrollY;
 
-    const scrollTop =
-        window.scrollY;
+  const documentHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
 
-    const documentHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
+  if (documentHeight <= 0) {
+    scrollProgress.style.width = "0%";
 
-    if (documentHeight <= 0) {
+    return;
+  }
 
-        scrollProgress.style.width =
-            "0%";
+  const percentage = (scrollTop / documentHeight) * 100;
 
-        return;
-    }
-
-    const percentage =
-        (scrollTop / documentHeight) * 100;
-
-    scrollProgress.style.width =
-        `${Math.min(100, Math.max(0, percentage))}%`;
-
+  scrollProgress.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
 }
-
 
 /* =========================================================
    ACTIVE NAVIGATION
    ========================================================= */
 
 function updateActiveNavigation() {
+  const sections = document.querySelectorAll("main section[id]");
 
-    const sections =
-        document.querySelectorAll(
-            "main section[id]"
-        );
+  const scrollPosition = window.scrollY + 160;
 
-    const scrollPosition =
-        window.scrollY + 160;
+  let currentSection = "";
 
-    let currentSection = "";
+  sections.forEach((section) => {
+    if (scrollPosition >= section.offsetTop) {
+      currentSection = section.id;
+    }
+  });
 
-    sections.forEach(
-        section => {
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
 
-            if (
-                scrollPosition >=
-                section.offsetTop
-            ) {
-
-                currentSection =
-                    section.id;
-
-            }
-
-        }
-    );
-
-
-    navLinks.forEach(
-        link => {
-
-            const href =
-                link.getAttribute("href");
-
-            link.classList.toggle(
-                "active",
-                href === `#${currentSection}`
-            );
-
-        }
-    );
-
+    link.classList.toggle("active", href === `#${currentSection}`);
+  });
 }
-
 
 /* =========================================================
    SCROLL HANDLER
@@ -424,636 +259,497 @@ function updateActiveNavigation() {
 
 let ticking = false;
 
-
 function handleScroll() {
+  if (ticking) {
+    return;
+  }
 
-    if (ticking) {
-        return;
-    }
+  window.requestAnimationFrame(() => {
+    updateScrollProgress();
 
-    window.requestAnimationFrame(
-        () => {
+    updateActiveNavigation();
 
-            updateScrollProgress();
+    ticking = false;
+  });
 
-            updateActiveNavigation();
-
-            ticking = false;
-
-        }
-    );
-
-    ticking = true;
-
+  ticking = true;
 }
 
-
-window.addEventListener(
-    "scroll",
-    handleScroll,
-    { passive: true }
-);
-
+window.addEventListener("scroll", handleScroll, { passive: true });
 
 /* =========================================================
    INTERSECTION OBSERVER
    ========================================================= */
 
-const revealObserver =
-    new IntersectionObserver(
-        entries => {
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        return;
+      }
 
-            entries.forEach(
-                entry => {
+      entry.target.classList.add("visible");
 
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
+      revealObserver.unobserve(entry.target);
+    });
+  },
+  {
+    threshold: 0.08,
 
-                    entry.target.classList.add(
-                        "visible"
-                    );
-
-                    revealObserver.unobserve(
-                        entry.target
-                    );
-
-                }
-            );
-
-        },
-        {
-            threshold: 0.08,
-
-            rootMargin:
-                "0px 0px -40px 0px"
-        }
-    );
-
+    rootMargin: "0px 0px -40px 0px",
+  },
+);
 
 function observeRevealElements() {
+  document
+    .querySelectorAll(
+      ".work-item, .skill-card, .about-main, .about-stats, .contact-box",
+    )
+    .forEach((element) => {
+      if (!element.classList.contains("fade-in")) {
+        element.classList.add("fade-in");
+      }
 
-    document
-        .querySelectorAll(
-            ".work-item, .skill-card, .about-main, .about-stats, .contact-box"
-        )
-        .forEach(
-            element => {
-
-                if (
-                    !element.classList.contains(
-                        "fade-in"
-                    )
-                ) {
-
-                    element.classList.add(
-                        "fade-in"
-                    );
-
-                }
-
-                revealObserver.observe(
-                    element
-                );
-
-            }
-        );
-
+      revealObserver.observe(element);
+    });
 }
-
 
 /* =========================================================
    GITHUB PROJECTS
    ========================================================= */
 
 async function loadGitHubProjects() {
+  if (!projectsGrid) {
+    console.error("❌ projectsGrid not found");
 
-    if (!projectsGrid) {
+    return;
+  }
 
-        console.error(
-            "❌ projectsGrid not found"
-        );
+  console.log("🔵 Starting GitHub project loading...");
 
-        return;
+  showLoading();
+
+  const apiUrl =
+    "https://api.github.com/search/repositories" +
+    `?q=user:${encodeURIComponent(GITHUB_USERNAME)}` +
+    `+topic:${encodeURIComponent(PORTFOLIO_TOPIC)}` +
+    "&sort=updated" +
+    "&order=desc" +
+    `&per_page=${MAX_PROJECTS}`;
+
+  console.log("🌐 GitHub API URL:", apiUrl);
+
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        Accept: "application/vnd.github+json",
+      },
+    });
+
+    console.log("📡 GitHub HTTP status:", response.status);
+
+    console.log("📡 GitHub response OK:", response.ok);
+
+    const data = await response.json();
+
+    console.log("📦 GitHub API response:", data);
+
+    if (!response.ok) {
+      throw new Error(data.message || `GitHub API error: ${response.status}`);
     }
 
+    let repositories = Array.isArray(data.items) ? data.items : [];
+
+    console.log("📊 Total repositories found:", data.total_count);
 
     console.log(
-        "🔵 Starting GitHub project loading..."
+      "📁 Repositories returned:",
+      repositories.map((repo) => ({
+        name: repo.name,
+        topics: repo.topics,
+        language: repo.language,
+        url: repo.html_url,
+        homepage: repo.homepage,
+      })),
     );
 
+    /*
+     * Do not show the portfolio repository itself.
+     */
 
-    showLoading();
-
-
-    const apiUrl =
-        "https://api.github.com/search/repositories" +
-        `?q=user:${encodeURIComponent(GITHUB_USERNAME)}` +
-        `+topic:${encodeURIComponent(PORTFOLIO_TOPIC)}` +
-        "&sort=updated" +
-        "&order=desc" +
-        `&per_page=${MAX_PROJECTS}`;
-
-
-    console.log(
-        "🌐 GitHub API URL:",
-        apiUrl
+    repositories = repositories.filter(
+      (repository) => repository.name.toLowerCase() !== "portfolio",
     );
 
+    /*
+     * No repositories.
+     */
 
-    try {
+    if (repositories.length === 0) {
+      console.warn("⚠️ GitHub returned no portfolio repositories.");
 
-        const response =
-            await fetch(
-                apiUrl,
-                {
-                    headers: {
-                        Accept:
-                            "application/vnd.github+json"
-                    }
-                }
-            );
+      showEmptyState();
 
-
-        console.log(
-            "📡 GitHub HTTP status:",
-            response.status
-        );
-
-
-        console.log(
-            "📡 GitHub response OK:",
-            response.ok
-        );
-
-
-        const data =
-            await response.json();
-
-
-        console.log(
-            "📦 GitHub API response:",
-            data
-        );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                `GitHub API error: ${response.status}`
-            );
-
-        }
-
-
-        let repositories =
-            Array.isArray(data.items)
-                ? data.items
-                : [];
-
-
-        console.log(
-            "📊 Total repositories found:",
-            data.total_count
-        );
-
-
-        console.log(
-            "📁 Repositories returned:",
-            repositories.map(
-                repo => ({
-                    name: repo.name,
-                    topics: repo.topics,
-                    language: repo.language,
-                    url: repo.html_url,
-                    homepage: repo.homepage
-                })
-            )
-        );
-
-
-        /*
-         * Do not show the portfolio repository itself.
-         */
-
-        repositories =
-            repositories.filter(
-                repository =>
-                    repository.name.toLowerCase() !==
-                    "portfolio"
-            );
-
-
-        /*
-         * No repositories.
-         */
-
-        if (repositories.length === 0) {
-
-            console.warn(
-                "⚠️ GitHub returned no portfolio repositories."
-            );
-
-            showEmptyState();
-
-            return;
-        }
-
-
-        /*
-         * Featured projects first.
-         */
-
-        repositories.sort(
-            (a, b) => {
-
-                const aFeatured =
-                    Array.isArray(a.topics) &&
-                    a.topics.includes(
-                        FEATURED_TOPIC
-                    );
-
-
-                const bFeatured =
-                    Array.isArray(b.topics) &&
-                    b.topics.includes(
-                        FEATURED_TOPIC
-                    );
-
-
-                if (
-                    aFeatured !== bFeatured
-                ) {
-
-                    return bFeatured ? 1 : -1;
-
-                }
-
-
-                return (
-                    new Date(b.updated_at) -
-                    new Date(a.updated_at)
-                );
-
-            }
-        );
-
-
-        console.log(
-            "✅ Rendering repositories:",
-            repositories.length
-        );
-
-
-        /*
-         * Clear existing project cards.
-         */
-
-        projectsGrid.innerHTML = "";
-
-
-        /*
-         * Create project cards.
-         */
-
-        repositories.forEach(
-            (repository, index) => {
-
-                const card =
-                    createProjectCard(
-                        repository,
-                        index
-                    );
-
-                projectsGrid.appendChild(
-                    card
-                );
-
-            }
-        );
-
-
-        initializeProjectLinks();
-
-        observeRevealElements();
-
-
-        console.log(
-            "✅ GitHub projects rendered successfully."
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "❌ Unable to load GitHub projects:",
-            error
-        );
-
-        showErrorState();
-
+      return;
     }
 
+    /*
+     * Featured projects first.
+     */
+
+    repositories.sort((a, b) => {
+      const aFeatured =
+        Array.isArray(a.topics) && a.topics.includes(FEATURED_TOPIC);
+
+      const bFeatured =
+        Array.isArray(b.topics) && b.topics.includes(FEATURED_TOPIC);
+
+      if (aFeatured !== bFeatured) {
+        return bFeatured ? 1 : -1;
+      }
+
+      return new Date(b.updated_at) - new Date(a.updated_at);
+    });
+
+    console.log("✅ Rendering repositories:", repositories.length);
+
+    /*
+     * Clear existing project cards.
+     */
+
+    projectsGrid.innerHTML = "";
+
+    /*
+     * Create project cards.
+     */
+
+    repositories.forEach((repository, index) => {
+      const card = createProjectCard(repository, index);
+
+      projectsGrid.appendChild(card);
+    });
+
+    initializeProjectLinks();
+
+    observeRevealElements();
+
+    console.log("✅ GitHub projects rendered successfully.");
+  } catch (error) {
+    console.error("❌ Unable to load GitHub projects:", error);
+
+    showErrorState();
+  }
 }
-
 
 /* =========================================================
    PROJECT CARD
    ========================================================= */
 
-function createProjectCard(
-    repository,
-    index
-) {
+/* =========================================================
+   PROJECT CARD
+   ========================================================= */
 
-    const article =
-        document.createElement("article");
+function createProjectCard(repository, index) {
+  const article = document.createElement("article");
 
+  article.className = "work-item";
 
-    article.className =
-        "work-item";
+  /*
+   * Repository key.
+   */
 
+  const repositoryKey = repository.name.toLowerCase();
 
-    /*
-     * Repository topics.
-     */
+  /*
+   * Curated metadata.
+   */
 
-    const topics =
-        Array.isArray(repository.topics)
-            ? repository.topics.filter(
-                topic =>
-                    topic !==
-                        PORTFOLIO_TOPIC &&
-                    topic !==
-                        FEATURED_TOPIC
-            )
-            : [];
+  const metadata = PROJECT_METADATA[repositoryKey] || {};
 
+  /*
+   * Project title.
+   */
 
-    /*
-     * If there are no topics,
-     * use the repository language.
-     */
+  const projectTitle = metadata.title || formatProjectName(repository.name);
 
-    if (
-        topics.length === 0 &&
-        repository.language
-    ) {
+  /*
+   * Project description.
+   */
 
-        topics.push(
-            repository.language
-        );
+  const description =
+    metadata.description ||
+    repository.description ||
+    "A software project developed by Anil Rijal.";
 
-    }
+  /*
+   * Project category.
+   */
 
+  const category =
+    metadata.category || repository.language || "Software Project";
 
-    const visibleTopics =
-        topics.slice(0, 4);
+  /*
+   * Technologies.
+   *
+   * Curated metadata takes priority.
+   */
 
+  const technologies =
+    Array.isArray(metadata.technologies) && metadata.technologies.length > 0
+      ? metadata.technologies
+      : Array.isArray(repository.topics)
+        ? repository.topics.filter(
+            (topic) => topic !== PORTFOLIO_TOPIC && topic !== FEATURED_TOPIC,
+          )
+        : [];
 
-    /*
-     * Featured repository.
-     */
+  /*
+   * Fallback technology.
+   */
 
-    const isFeatured =
-        Array.isArray(repository.topics) &&
-        repository.topics.includes(
-            FEATURED_TOPIC
-        );
+  if (technologies.length === 0 && repository.language) {
+    technologies.push(repository.language);
+  }
 
+  /*
+   * Limit technology badges.
+   */
 
-    /*
-     * Description.
-     */
+  const visibleTechnologies = technologies.slice(0, 6);
 
-    const description =
-        repository.description ||
-        "A software project developed by Anil Rijal.";
+  /*
+   * Project features.
+   */
 
+  const features = Array.isArray(metadata.features)
+    ? metadata.features.slice(0, 4)
+    : [];
 
-    /*
-     * Live website.
-     *
-     * Explicit project URLs take priority
-     * over the GitHub repository homepage.
-     */
+  /*
+   * Featured project.
+   */
 
-    const repositoryKey =
-        repository.name.toLowerCase();
+  const isFeatured =
+    metadata.featured === true ||
+    (Array.isArray(repository.topics) &&
+      repository.topics.includes(FEATURED_TOPIC));
 
+  /*
+   * Live website.
+   */
 
-    const homepage =
-        PROJECT_LIVE_URLS[repositoryKey] ||
-        (
-            typeof repository.homepage === "string" &&
-            repository.homepage.trim()
-                ? repository.homepage.trim()
-                : null
-        );
+  const homepage =
+    PROJECT_LIVE_URLS[repositoryKey] ||
+    (typeof repository.homepage === "string" && repository.homepage.trim()
+      ? repository.homepage.trim()
+      : null);
 
+  /*
+   * GitHub URL.
+   */
 
-    /*
-     * GitHub URL.
-     */
+  const githubUrl = repository.html_url;
 
-    const githubUrl =
-        repository.html_url;
+  /*
+   * Last updated date.
+   */
 
+  const updatedDate = repository.updated_at
+    ? new Date(repository.updated_at).toLocaleDateString("en-US", {
+        month: "short",
+        year: "numeric",
+      })
+    : null;
 
-    /*
-     * Programming language.
-     */
+  /*
+   * Technology badges.
+   */
 
-    const language =
-        repository.language ||
-        "Code";
-
-
-    /*
-     * Repository statistics.
-     */
-
-    const stars =
-        repository.stargazers_count || 0;
-
-
-    const forks =
-        repository.forks_count || 0;
-
-
-    /*
-     * Project initial.
-     */
-
-    const projectInitial =
-        repository.name
-            .charAt(0)
-            .toUpperCase();
-
-
-    /*
-     * Tags.
-     */
-
-    const tags =
-        visibleTopics
-            .map(
-                topic => `
-                    <span class="project-tag">
-                        ${escapeHTML(
-                            formatTopic(topic)
-                        )}
+  const technologyMarkup = visibleTechnologies
+    .map(
+      (technology) => `
+                    <span class="project-tech">
+                        ${escapeHTML(formatTopic(technology))}
                     </span>
-                `
-            )
-            .join("");
+                `,
+    )
+    .join("");
 
+  /*
+   * Feature list.
+   */
 
-    /*
-     * Build project card.
-     */
+  const featureMarkup = features
+    .map(
+      (feature) => `
+                    <li>
+                        <i class="fas fa-check"></i>
+                        <span>
+                            ${escapeHTML(feature)}
+                        </span>
+                    </li>
+                `,
+    )
+    .join("");
 
-    article.innerHTML = `
+  /*
+   * Project card.
+   */
 
-        <div class="project-visual">
+  article.innerHTML = `
 
-            <div class="project-visual-grid"></div>
+        <!-- Project header -->
 
-            <div class="project-visual-content">
+        <div class="project-header">
 
-                <span class="project-number">
+            <div class="project-header-content">
+
+                <span class="project-index">
                     ${String(index + 1).padStart(2, "0")}
                 </span>
 
-                <div class="project-icon">
-                    ${escapeHTML(projectInitial)}
-                </div>
-
-                <span class="project-language">
-                    ${escapeHTML(language)}
+                <span class="project-category">
+                    ${escapeHTML(category)}
                 </span>
 
             </div>
 
 
             ${
-                isFeatured
-                    ? `
+              isFeatured
+                ? `
                         <span class="featured-badge">
-
                             <i class="fas fa-star"></i>
-
                             Featured
-
                         </span>
                     `
-                    : ""
+                : ""
             }
 
         </div>
 
+
+        <!-- Project body -->
 
         <div class="project-body">
 
             <div class="project-title-row">
 
                 <h3>
-                    ${escapeHTML(
-                        formatProjectName(
-                            repository.name
-                        )
-                    )}
+                    ${escapeHTML(projectTitle)}
                 </h3>
 
             </div>
 
 
             <p class="project-description">
-
                 ${escapeHTML(description)}
-
             </p>
 
 
             ${
-                tags
-                    ? `
-                        <div class="work-tags">
-                            ${tags}
+              technologyMarkup
+                ? `
+                        <div class="project-technologies">
+
+                            <span class="project-label">
+                                Technologies
+                            </span>
+
+                            <div class="project-tech-list">
+                                ${technologyMarkup}
+                            </div>
+
                         </div>
                     `
-                    : ""
+                : ""
             }
 
 
-            <div class="project-meta">
+            ${
+              featureMarkup
+                ? `
+                        <div class="project-features">
 
-                <span>
+                            <span class="project-label">
+                                Highlights
+                            </span>
 
-                    <i class="fas fa-star"></i>
+                            <ul>
+                                ${featureMarkup}
+                            </ul>
 
-                    ${stars}
-
-                </span>
-
-
-                <span>
-
-                    <i class="fas fa-code-branch"></i>
-
-                    ${forks}
-
-                </span>
-
-
-                <span>
-
-                    <i class="fas fa-code"></i>
-
-                    ${escapeHTML(language)}
-
-                </span>
-
-            </div>
+                        </div>
+                    `
+                : ""
+            }
 
 
-            <div class="project-links">
+            <!-- Project footer -->
 
-                <a
-                    href="${escapeHTML(githubUrl)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="project-link"
-                    data-external="true"
-                >
+            <div class="project-footer">
 
-                    <i class="fab fa-github"></i>
+                <div class="project-meta">
 
-                    GitHub
-
-                </a>
-
-
-                ${
-                    homepage
+                    ${
+                      updatedDate
                         ? `
-                            <a
-                                href="${escapeHTML(homepage)}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="project-link project-link-primary"
-                                data-external="true"
-                            >
-
-                                <i class="fas fa-arrow-up-right-from-square"></i>
-
-                                Live Demo
-
-                            </a>
-                        `
+                                <span>
+                                    <i class="far fa-calendar"></i>
+                                    Updated ${escapeHTML(updatedDate)}
+                                </span>
+                            `
                         : ""
-                }
+                    }
+
+                    ${
+                      repository.language
+                        ? `
+                                <span>
+                                    <i class="fas fa-code"></i>
+                                    ${escapeHTML(repository.language)}
+                                </span>
+                            `
+                        : ""
+                    }
+
+                </div>
+
+
+                <div class="project-links">
+
+                    <a
+                        href="${escapeHTML(githubUrl)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-link"
+                        data-external="true"
+                        aria-label="View ${escapeHTML(projectTitle)} on GitHub"
+                    >
+                        <i class="fab fa-github"></i>
+                        <span>Source</span>
+                    </a>
+
+
+                    ${
+                      homepage
+                        ? `
+                                <a
+                                    href="${escapeHTML(homepage)}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="project-link project-link-primary"
+                                    data-external="true"
+                                    aria-label="View live ${escapeHTML(projectTitle)} website"
+                                >
+                                    <span>Live Project</span>
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                </a>
+                            `
+                        : ""
+                    }
+
+                </div>
 
             </div>
 
@@ -1061,79 +757,47 @@ function createProjectCard(
 
     `;
 
-
-    return article;
-
+  return article;
 }
-
 
 /* =========================================================
    PROJECT FORMATTING
    ========================================================= */
 
 function formatProjectName(name) {
-
-    return name
-        .replace(
-            /[-_]+/g,
-            " "
-        )
-        .replace(
-            /\b\w/g,
-            character =>
-                character.toUpperCase()
-        );
-
+  return name
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (character) => character.toUpperCase());
 }
-
 
 function formatTopic(topic) {
-
-    return topic
-        .replace(
-            /[-_]+/g,
-            " "
-        )
-        .replace(
-            /\b\w/g,
-            character =>
-                character.toUpperCase()
-        );
-
+  return topic
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (character) => character.toUpperCase());
 }
-
 
 /* =========================================================
    HTML ESCAPING
    ========================================================= */
 
 function escapeHTML(value) {
+  const element = document.createElement("div");
 
-    const element =
-        document.createElement("div");
+  element.textContent = value ?? "";
 
-
-    element.textContent =
-        value ?? "";
-
-
-    return element.innerHTML;
-
+  return element.innerHTML;
 }
-
 
 /* =========================================================
    PROJECT STATES
    ========================================================= */
 
 function showLoading() {
+  if (!projectsGrid) {
+    return;
+  }
 
-    if (!projectsGrid) {
-        return;
-    }
-
-
-    projectsGrid.innerHTML = `
+  projectsGrid.innerHTML = `
 
         <div class="projects-loading">
 
@@ -1146,18 +810,14 @@ function showLoading() {
         </div>
 
     `;
-
 }
 
-
 function showEmptyState() {
+  if (!projectsGrid) {
+    return;
+  }
 
-    if (!projectsGrid) {
-        return;
-    }
-
-
-    projectsGrid.innerHTML = `
+  projectsGrid.innerHTML = `
 
         <div class="projects-message">
 
@@ -1179,18 +839,14 @@ function showEmptyState() {
         </div>
 
     `;
-
 }
 
-
 function showErrorState() {
+  if (!projectsGrid) {
+    return;
+  }
 
-    if (!projectsGrid) {
-        return;
-    }
-
-
-    projectsGrid.innerHTML = `
+  projectsGrid.innerHTML = `
 
         <div class="projects-message">
 
@@ -1216,121 +872,85 @@ function showErrorState() {
 
     `;
 
+  const retryButton = projectsGrid.querySelector(".project-retry");
 
-    const retryButton =
-        projectsGrid.querySelector(
-            ".project-retry"
-        );
-
-
-    if (retryButton) {
-
-        retryButton.addEventListener(
-            "click",
-            loadGitHubProjects
-        );
-
-    }
-
+  if (retryButton) {
+    retryButton.addEventListener("click", loadGitHubProjects);
+  }
 }
 
+async function loadProjectMetadata() {
+  try {
+    const response = await fetch("./projects.json", {
+      cache: "no-cache",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to load projects.json: ${response.status}`);
+    }
+
+    PROJECT_METADATA = await response.json();
+
+    console.log("✅ Project metadata loaded:", PROJECT_METADATA);
+  } catch (error) {
+    console.error("❌ Failed to load project metadata:", error);
+
+    PROJECT_METADATA = {};
+  }
+}
 
 /* =========================================================
    EXTERNAL LINKS
    ========================================================= */
 
 function initializeProjectLinks() {
-
-    document
-        .querySelectorAll(
-            '[data-external="true"]'
-        )
-        .forEach(
-            link => {
-
-                link.addEventListener(
-                    "click",
-                    () => {
-
-                        console.log(
-                            "Opening:",
-                            link.href
-                        );
-
-                    }
-                );
-
-            }
-        );
-
+  document.querySelectorAll('[data-external="true"]').forEach((link) => {
+    link.addEventListener("click", () => {
+      console.log("Opening:", link.href);
+    });
+  });
 }
-
 
 /* =========================================================
    INITIALIZATION
    ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("🚀 Portfolio initialization started.");
 
-        console.log(
-            "🚀 Portfolio initialization started."
-        );
+  observeRevealElements();
 
+  await loadProjectMetadata();
 
-        observeRevealElements();
+  await loadGitHubProjects();
 
-        loadGitHubProjects();
+  updateScrollProgress();
 
-        updateScrollProgress();
-
-        updateActiveNavigation();
-
-
-        console.log(
-            "✅ Portfolio initialization complete."
-        );
-
-    }
-);
-
+  console.log("✅ Portfolio initialization complete.");
+});
 
 /* =========================================================
    KEYBOARD ACCESSIBILITY
    ========================================================= */
 
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Escape") {
-
-            closeMenu();
-
-        }
-
-    }
-);
-
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
 
 /* =========================================================
    PUBLIC API
    ========================================================= */
 
 window.PortfolioApp = {
+  loadGitHubProjects,
 
-    loadGitHubProjects,
+  setTheme,
 
-    setTheme,
+  toggleMenu,
 
-    toggleMenu,
-
-    closeMenu
-
+  closeMenu,
 };
 
-
-console.log(
-    "✅ Portfolio script ready."
-);
+console.log("✅ Portfolio script ready.");

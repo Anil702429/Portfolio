@@ -1,0 +1,21 @@
+{
+    "nepcart": {
+        "title": "NepCart",
+        "description": "A full-stack e-commerce platform built with Django, designed to manage products, users, orders, and core shopping workflows through a structured web application.",
+        "technologies": [
+            "Python",
+            "Django",
+            "HTML",
+            "CSS",
+            "JavaScript"
+        ],
+        "category": "Full-Stack Web Application",
+        "featured": true,
+        "features": [
+            "Product and catalog management",
+            "User authentication and account workflows",
+            "E-commerce ordering workflow",
+            "Django-based backend architecture"
+        ]
+    }
+}

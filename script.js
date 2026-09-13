@@ -95,6 +95,26 @@ const FEATURED_TOPIC = "featured";
 
 const MAX_PROJECTS = 20;
 
+/*
+ * Manually curated projects.
+ *
+ * Use this for private repositories that should
+ * appear on the public portfolio without exposing
+ * their GitHub source URL.
+ */
+const MANUAL_PROJECTS = [
+  {
+    name: "Photography",
+    description: null,
+    language: null,
+    topics: [],
+    homepage: "https://shots.anilrijal.info.np/",
+    html_url: null,
+    updated_at: null,
+    manual: true,
+  },
+];
+
 let PROJECT_METADATA = {};
 
 /* =========================================================
@@ -110,7 +130,7 @@ let PROJECT_METADATA = {};
 
 const PROJECT_LIVE_URLS = {
   nepcart: "https://nepcart.anilrijal.info.np/",
-   photography: "https://shots.anilrijal.info.np/",
+  photography: "https://shots.anilrijal.info.np/",
 };
 
 /* =========================================================
@@ -383,11 +403,40 @@ async function loadGitHubProjects() {
     );
 
     /*
+     * Add manually curated projects.
+     *
+     * Manual projects are used for private repositories
+     * that should appear on the public portfolio.
+     */
+
+    const manualProjects = Array.isArray(MANUAL_PROJECTS)
+      ? MANUAL_PROJECTS
+      : [];
+
+    repositories = [...repositories, ...manualProjects];
+
+    /*
+     * Remove duplicate project names.
+     */
+
+    const uniqueProjects = new Map();
+
+    repositories.forEach((repository) => {
+      const key = repository.name.toLowerCase();
+
+      if (!uniqueProjects.has(key)) {
+        uniqueProjects.set(key, repository);
+      }
+    });
+
+    repositories = Array.from(uniqueProjects.values());
+
+    /*
      * No repositories.
      */
 
     if (repositories.length === 0) {
-      console.warn("⚠️ GitHub returned no portfolio repositories.");
+      console.warn("⚠️ No portfolio projects available.");
 
       showEmptyState();
 
@@ -549,7 +598,10 @@ function createProjectCard(repository, index) {
    * GitHub URL.
    */
 
-  const githubUrl = repository.html_url;
+  const githubUrl =
+    typeof repository.html_url === "string" && repository.html_url.trim()
+      ? repository.html_url.trim()
+      : null;
 
   /*
    * Last updated date.
@@ -719,17 +771,23 @@ function createProjectCard(repository, index) {
 
                 <div class="project-links">
 
-                    <a
-                        href="${escapeHTML(githubUrl)}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="project-link"
-                        data-external="true"
-                        aria-label="View ${escapeHTML(projectTitle)} on GitHub"
-                    >
-                        <i class="fab fa-github"></i>
-                        <span>Source</span>
-                    </a>
+                    ${
+                      githubUrl
+                        ? `
+        <a
+            href="${escapeHTML(githubUrl)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-link"
+            data-external="true"
+            aria-label="View ${escapeHTML(projectTitle)} on GitHub"
+        >
+            <i class="fab fa-github"></i>
+            <span>Source</span>
+        </a>
+    `
+                        : ""
+                    }
 
 
                     ${

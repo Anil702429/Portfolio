@@ -110,6 +110,7 @@ let PROJECT_METADATA = {};
 
 const PROJECT_LIVE_URLS = {
   nepcart: "https://nepcart.anilrijal.info.np/",
+   photography: "https://shots.anilrijal.info.np/",
 };
 
 /* =========================================================

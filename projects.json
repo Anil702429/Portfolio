@@ -17,5 +17,24 @@
             "E-commerce ordering workflow",
             "Django-based backend architecture"
         ]
+    },
+
+    "photography": {
+        "title": "Shots by Anil",
+        "description": "A personal photography portfolio and web gallery designed to showcase nature, landscape, and atmospheric smartphone photography.",
+        "technologies": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Cloudinary"
+        ],
+        "category": "Frontend Application",
+        "featured": false,
+        "features": [
+            "Curated Photo Gallery",
+            "Responsive Image Layouts",
+            "Dedicated Narrative & About Section",
+            "Interactive Contact & Connect Links"
+        ]
     }
 }

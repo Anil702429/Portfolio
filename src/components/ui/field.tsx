@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 
 const control =
-  "w-full rounded-md border border-line bg-surface px-3.5 py-2.5 text-base text-text aria-invalid:border-danger";
+  "w-full rounded-[3px] border border-line bg-surface px-3.5 py-2.5 text-base text-text aria-invalid:border-danger";
 
 type FieldProps = {
   label: string;

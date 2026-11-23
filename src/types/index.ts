@@ -40,6 +40,8 @@ export type ProjectSummary = {
   liveUrl: string | null;
   featured: boolean;
   technologies: { name: string; slug: string }[];
+  /** Sections of the implementation notes, for the technical card. */
+  highlights: { title: string; text: string }[];
   updatedAt: Date | null;
 };
 

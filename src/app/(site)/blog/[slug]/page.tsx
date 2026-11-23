@@ -62,7 +62,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
       />
       <PageHeader title={post.title}>
         <p>{post.excerpt}</p>
-        <p className="mt-5 text-base">
+        <p className="label mt-5">
           <time dateTime={post.publishedAt.toISOString()}>{formatDate(post.publishedAt)}</time>, {post.readingMinutes}{" "}
           min read
           {post.category ? (
@@ -95,7 +95,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
         ) : null}
         <div className="min-w-0">
           {post.coverImage ? (
-            <div className="relative mb-12 aspect-16/9 max-w-176 overflow-hidden rounded-md">
+            <div className="relative mb-12 aspect-16/9 max-w-176 overflow-hidden rounded-[3px]">
               <Image src={post.coverImage} alt="" fill preload sizes="(min-width: 768px) 704px, 100vw" className="object-cover" />
             </div>
           ) : null}
@@ -106,7 +106,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
                 <li key={tag.slug}>
                   <Link
                     href={`/blog?tag=${encodeURIComponent(tag.slug)}`}
-                    className="inline-flex min-h-9 items-center rounded-md border border-line px-3 text-sm font-medium hover:bg-tint"
+                    className="inline-flex label min-h-10 items-center rounded-[3px] border border-line px-3 transition-colors hover:border-text"
                   >
                     {tag.name}
                   </Link>
@@ -120,7 +120,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
       {related.length ? (
         <section className="bg-tint py-14">
           <div className="container-page">
-            <h2 className="mb-8 text-3xl font-bold">Related articles</h2>
+            <h2 className="title mb-10">Related articles</h2>
             {related.map((item) => (
               <PostCard key={item.slug} post={item} heading="h3" />
             ))}

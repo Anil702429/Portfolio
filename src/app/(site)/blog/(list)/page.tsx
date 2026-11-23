@@ -22,8 +22,8 @@ export default async function BlogPage({ searchParams }: PageProps<"/blog">) {
   const empty = posts.length === 0 && !filtered;
 
   const chip = (selected: boolean) =>
-    `inline-flex min-h-9 items-center rounded-md border px-3 text-sm font-medium ${
-      selected ? "border-cobalt bg-cobalt text-white" : "border-line hover:bg-tint"
+    `label inline-flex min-h-10 items-center rounded-[3px] border px-3 transition-colors ${
+      selected ? "border-cobalt bg-cobalt text-white" : "border-line hover:border-text"
     }`;
 
   return (
@@ -55,7 +55,7 @@ export default async function BlogPage({ searchParams }: PageProps<"/blog">) {
                   type="search"
                   defaultValue={filters.q}
                   placeholder="Search articles"
-                  className="min-h-11 w-full min-w-0 rounded-md border border-line bg-surface px-3.5"
+                  className="min-h-11 w-full min-w-0 rounded-[3px] border border-line bg-surface px-3.5"
                 />
                 <Button type="submit">Search</Button>
               </form>

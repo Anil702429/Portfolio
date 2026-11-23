@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
+import { Familjen_Grotesk, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getSiteUrl } from "@/lib/env";
 import { getSettings } from "@/lib/queries";
 import "./globals.css";
 
-const sans = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted" });
+const heading = Familjen_Grotesk({ subsets: ["latin"], variable: "--font-heading" });
+const sans = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,11 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const viewport: Viewport = { themeColor: "#0f1a2e" };
+export const viewport: Viewport = { themeColor: "#111214" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${heading.variable} ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

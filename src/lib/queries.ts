@@ -9,7 +9,7 @@ import {
 } from "@/content/defaults";
 import type { Prisma } from "@/generated/prisma/client";
 import { isDatabaseConfigured } from "@/lib/env";
-import { readingMinutes } from "@/lib/markdown";
+import { extractSections, readingMinutes } from "@/lib/markdown";
 import { getPrisma } from "@/lib/prisma";
 import { slugify } from "@/lib/slug";
 import type { PostDetail, PostSummary, ProjectDetail, ProjectSummary, SiteSettings } from "@/types";
@@ -63,25 +63,41 @@ function previewProjects(): ProjectDetail[] {
   return defaultProjects.map((project) => ({
     ...project,
     technologies: project.technologies.map((name) => ({ name, slug: slugify(name) })),
+    highlights: extractSections(project.content),
     images: [],
     updatedAt: null,
   }));
 }
 
 export const getProjects = cache(async (): Promise<ProjectSummary[]> => {
-  if (!isDatabaseConfigured()) return previewProjects();
-  return getPrisma().project.findMany({
+  if (!isDatabaseConfigured()) {
+    return previewProjects().map((project) => ({
+      title: project.title,
+      slug: project.slug,
+      category: project.category,
+      shortDescription: project.shortDescription,
+      coverImage: project.coverImage,
+      githubUrl: project.githubUrl,
+      liveUrl: project.liveUrl,
+      featured: project.featured,
+      technologies: project.technologies,
+      highlights: project.highlights,
+      updatedAt: project.updatedAt,
+    }));
+  }
+  const projects = await getPrisma().project.findMany({
     where: { published: true },
     orderBy: [{ displayOrder: "asc" }, { createdAt: "desc" }],
-    select: projectSummarySelect,
+    select: { ...projectSummarySelect, content: true },
   });
+  return projects.map(({ content, ...project }) => ({ ...project, highlights: extractSections(content) }));
 });
 
 export const getProject = cache(async (slug: string): Promise<ProjectDetail | null> => {
   if (!isDatabaseConfigured()) {
     return previewProjects().find((project) => project.slug === slug) ?? null;
   }
-  return getPrisma().project.findFirst({
+  const project = await getPrisma().project.findFirst({
     where: { slug, published: true },
     select: {
       ...projectSummarySelect,
@@ -93,6 +109,7 @@ export const getProject = cache(async (slug: string): Promise<ProjectDetail | nu
       images: { select: { url: true, alt: true }, orderBy: listOrder },
     },
   });
+  return project ? { ...project, highlights: extractSections(project.content) } : null;
 });
 
 const postSelect = {

@@ -18,12 +18,12 @@ export default async function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: 90,
-          background: "#0f1a2e",
-          color: "#ffffff",
+          background: "#111214",
+          color: "#f3f1ea",
         }}
       >
         <div style={{ fontSize: 108, fontWeight: 700 }}>{settings.name}</div>
-        <div style={{ fontSize: 44, marginTop: 20, color: "#82b1ff" }}>{settings.professionalTitle}</div>
+        <div style={{ fontSize: 44, marginTop: 20, color: "#94a7ff" }}>{settings.professionalTitle}</div>
       </div>
     ),
     size,

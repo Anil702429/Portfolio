@@ -1,9 +1,9 @@
 export function PageHeader({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
-    <div className="bg-ink py-14 text-white sm:py-20">
-      <div className="container-page">
-        <h1 className="max-w-4xl text-4xl font-bold sm:text-6xl">{title}</h1>
-        {children ? <div className="mt-5 max-w-2xl text-lg text-ink-soft">{children}</div> : null}
+    <div className="bg-ink pt-20 pb-14 text-ink-text sm:pt-32 sm:pb-20">
+      <div className="container-page grid items-end gap-8 lg:grid-cols-12">
+        <h1 className="enter display lg:col-span-8">{title}</h1>
+        {children ? <div className="enter text-lg leading-relaxed text-ink-soft [animation-delay:0.12s] lg:col-span-4">{children}</div> : null}
       </div>
     </div>
   );

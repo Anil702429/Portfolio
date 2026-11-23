@@ -21,25 +21,25 @@ export default async function ContactPage() {
       <PageHeader title="Contact">
         <p>Write to me about a project, an opportunity or a question.</p>
       </PageHeader>
-      <div className="container-page grid gap-14 py-14 sm:py-20 md:grid-cols-[8fr_4fr] md:gap-20">
+      <div className="container-page grid gap-14 py-16 sm:py-28 lg:grid-cols-[7fr_5fr] lg:gap-28">
         <ContactForm />
-        <div className="space-y-6">
+        <div className="space-y-9">
           {settings.email ? (
             <div>
-              <h2 className="font-bold">Email</h2>
-              <a href={`mailto:${settings.email}`} className="mt-1 inline-block text-accent underline underline-offset-4">
+              <h2 className="label font-sans font-normal tracking-normal text-soft">Email</h2>
+              <a href={`mailto:${settings.email}`} className="link mt-1 inline-block text-xl break-all transition-colors hover:text-accent">
                 {settings.email}
               </a>
             </div>
           ) : null}
           {links.some((link) => link.url) ? (
             <div>
-              <h2 className="font-bold">Profiles</h2>
-              <ul className="mt-1 space-y-1">
+              <h2 className="label font-sans font-normal tracking-normal text-soft">Profiles</h2>
+              <ul className="mt-2 space-y-3">
                 {links.map(({ label, url }) =>
                   url ? (
                     <li key={label}>
-                      <a href={url} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-4">
+                      <a href={url} target="_blank" rel="noopener noreferrer" className="link text-xl transition-colors hover:text-accent">
                         {label}
                       </a>
                     </li>
@@ -50,8 +50,8 @@ export default async function ContactPage() {
           ) : null}
           {settings.location ? (
             <div>
-              <h2 className="font-bold">Location</h2>
-              <p className="mt-1 text-soft">{settings.location}</p>
+              <h2 className="label font-sans font-normal tracking-normal text-soft">Location</h2>
+              <p className="mt-1 text-xl">{settings.location}</p>
             </div>
           ) : null}
         </div>

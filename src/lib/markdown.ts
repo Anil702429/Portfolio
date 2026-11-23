@@ -23,6 +23,23 @@ export function extractHeadings(markdown: string): Heading[] {
   return headings.filter((heading) => heading.level === 2 || heading.level === 3);
 }
 
+/** Each level-two heading with the plain text of its first paragraph. */
+export function extractSections(markdown: string): { title: string; text: string }[] {
+  const plain = (value: string) =>
+    value.replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[`*]/g, "").trim();
+  const sections: { title: string; text: string }[] = [];
+  // Fenced code can contain lines that look like headings.
+  const withoutCode = markdown.replace(/\r\n/g, "\n").replace(/^ {0,3}(`{3,}|~{3,})[\s\S]*?^ {0,3}\1.*$/gm, "");
+  for (const part of withoutCode.split(/^## +/m).slice(1)) {
+    const [title = "", ...rest] = part.split("\n");
+    const text = rest.join("\n").trim().split(/\n\s*\n/)[0] ?? "";
+    if (title.trim() && text && !/^[#>|!-]/.test(text)) {
+      sections.push({ title: plain(title), text: plain(text.replace(/\n/g, " ")) });
+    }
+  }
+  return sections;
+}
+
 export function readingMinutes(markdown: string): number {
   const words = markdown.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 220));

@@ -1,203 +1,102 @@
-# Anil Rijal - Creative Developer Portfolio
+# Anil Rijal: portfolio
 
-A stunning, modern portfolio website for Anil Rijal - CSIT Student, Graphic Designer, and Aspiring Web & App Developer from Nepal. Features a clean, minimalistic layout with smooth animations, dark/light mode toggle, and responsive design.
+Portfolio site and admin dashboard. Next.js (App Router), React, TypeScript, Tailwind CSS, Prisma, and Supabase (PostgreSQL, Auth, Storage).
 
-## ✨ Features
+## Run it locally
 
-### 🎨 Design & UI
-- **Modern Glassmorphism Design**: Subtle glass effects with backdrop blur
-- **Dark/Light Mode Toggle**: Seamless theme switching with persistent storage
-- **Pastel Gradients**: Beautiful gradient combinations throughout the design
-- **Smooth Animations**: CSS animations and micro-interactions
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+Requires Node.js 22 or newer.
 
-### 🚀 Interactive Elements
-- **Animated Hero Section**: Typing animation and floating elements
-- **Smooth Scrolling**: Navigation with smooth scroll behavior
-- **Hover Effects**: Interactive project cards with overlay animations
-- **Animated Skill Bars**: Progress bars that animate on scroll
-- **Floating Labels**: Modern form inputs with floating labels
-- **Scroll Progress Indicator**: Visual progress bar at the top
+```bash
+npm install
+npm run dev
+```
 
-### 📱 User Experience
-- **Mobile-First Navigation**: Hamburger menu for mobile devices
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Form Validation**: Client-side validation with notifications
-- **Loading States**: Smooth loading animations and transitions
-- **Performance Optimized**: Throttled scroll events and image preloading
+Open http://localhost:3000. Without a `.env` file the public pages show the verified content in `src/content/defaults.ts`. The blog is empty, and the contact form and admin stay off until the steps below are done.
 
-### 🛠 Technical Features
-- **CSS Custom Properties**: Dynamic theming with CSS variables
-- **Intersection Observer**: Efficient scroll-triggered animations
-- **Service Worker Ready**: PWA capabilities for offline functionality
-- **Error Handling**: Comprehensive error catching and logging
-- **Performance Monitoring**: Built-in performance metrics
+## Connect Supabase
 
-## 🎯 Sections
+Use a new or staging project while reviewing, not a production database.
 
-1. **Hero Section**: Animated title with Anil's name and profession
-2. **Featured Work**: Project showcase in web development, app development, graphic design, and game development
-3. **About**: CSIT student background with college timing and interests
-4. **Skills**: Four categories - Web Development, App Development, Design & Creative, Game Dev & Others
-5. **Contact**: Contact form with floating labels and contact information
-6. **Footer**: Social links including YouTube, Instagram, GitHub, and LinkedIn
+1. Create a Supabase project. Copy `.env.example` to `.env`.
+2. Fill in `DATABASE_URL` (transaction pooler, port 6543), `DIRECT_URL` (session pooler or direct, port 5432), `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL` and `CONTACT_IP_SALT`.
+3. Create the tables and policies, then load the starting content:
 
-## 🚀 Getting Started
+   ```bash
+   npm run db:deploy
+   npm run db:seed
+   ```
 
-### Prerequisites
-- Modern web browser with CSS Grid and Flexbox support
-- Local web server (optional, for development)
+   The seed never overwrites existing rows. NepFlix and CSIT GOD are added unpublished, for you to complete.
+4. Open the Supabase SQL editor and run `supabase/storage.sql`.
+5. Restart the server.
 
-### Installation
+`NEXT_PUBLIC_*` values are read at build time, so rebuild after changing them.
 
-1. **Clone or Download** the project files
-2. **Open** `index.html` in your web browser
-3. **Customize** the content to match your portfolio
+### Storage buckets
 
-### File Structure
+| Bucket | Contents | Types |
+| --- | --- | --- |
+| `project-images` | Project covers and screenshots | JPEG, PNG, WebP, AVIF |
+| `post-covers` | Article covers and images | JPEG, PNG, WebP, AVIF |
+| `profile` | Profile image | JPEG, PNG, WebP, AVIF |
+| `resume` | Resume | PDF |
 
-Portfolio/
-├── index.html          # Main HTML structure
-├── styles.css          # All styling and animations
-├── script.js           # JavaScript functionality
-└── README.md           # This documentation
+All are public to read and limited to 4 MB. Only accounts in `AdminUser` can upload or delete. A file uploaded in a form that is never saved stays in its bucket; remove it in the Supabase dashboard.
 
+## Create the administrator
 
-## 🎨 Customization
+1. In Supabase, under Authentication, turn off new user sign-ups.
+2. Under Authentication > Users, add a user with your email and a strong password, with the email confirmed.
+3. Add that user to the allow-list:
 
-### Colors & Themes
-The website uses CSS custom properties for easy theming. Modify the `:root` variables in `styles.css`:
+   ```bash
+   npm run admin:grant -- you@example.com
+   ```
+4. Sign in at `/admin/login`.
 
-css
-:root {
-    --primary-color: #6366f1;
-    --secondary-color: #f59e0b;
-    --accent-color: #10b981;
-    /* ... more variables */
-}
+To revoke access, delete the row from the `AdminUser` table. Reset passwords from the Supabase dashboard.
 
+## Contact notifications
 
-### Content Updates
-- **Personal Information**: Already customized for Anil Rijal - CSIT Student from Nepal
-- **Projects**: Showcases React web apps, Flutter mobile apps, graphic design, and game development
-- **Skills**: Four comprehensive categories covering all of Anil's expertise areas
-- **Images**: Replace placeholder images with actual project screenshots
+Messages are always stored in the database. To receive email too, set `RESEND_API_KEY`, `CONTACT_EMAIL` and `CONTACT_FROM_EMAIL`. The sender must be on a domain verified in Resend.
 
-### Adding New Sections
-1. Add the HTML structure in `index.html`
-2. Style the section in `styles.css`
-3. Add any JavaScript functionality in `script.js`
+Spam protection is a hidden field, a minimum fill time, and hourly limits: 3 per sender and 60 in total. Sender limits use the `x-real-ip` header, so host behind a platform or proxy that sets it.
 
-## 📱 Responsive Breakpoints
+## Commands
 
-- **Desktop**: 1200px and above
-- **Tablet**: 768px - 1199px
-- **Mobile**: Below 768px
-- **Small Mobile**: Below 480px
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build`, `npm start` | Production build and server |
+| `npm run typecheck` | TypeScript |
+| `npm run lint` | ESLint |
+| `npm run db:migrate` | Create a migration in development |
+| `npm run db:deploy` | Apply migrations |
+| `npm run db:seed` | Add starting content |
+| `npm run admin:grant -- <email>` | Make an Auth user an administrator |
 
-## 🎭 Animations
+## Structure
 
-### CSS Animations
-- **Fade In Up**: Elements appear with upward motion
-- **Float**: Floating elements with continuous movement
-- **Scale**: Hover effects with subtle scaling
-- **Slide**: Smooth transitions for mobile menu
+```
+prisma/            schema, migrations, seed
+supabase/          Storage buckets and policies
+scripts/           admin:grant
+src/app/(site)/    public pages
+src/app/admin/     sign-in and dashboard
+src/actions/       Server Actions (every mutation)
+src/components/    UI; ui/ for primitives, admin/ for the dashboard
+src/content/       verified starting content
+src/lib/           auth, queries, validation, Prisma and Supabase clients
+src/proxy.ts       session refresh for /admin
+```
 
-### JavaScript Animations
-- **Typing Effect**: Hero title typing animation
-- **Progress Bars**: Skill bars that fill on scroll
-- **Parallax**: Floating elements with parallax effect
-- **Scroll Progress**: Top progress indicator
+## Security model
 
-## 🔧 Browser Support
+- The browser never talks to the database or Supabase directly. Reads and writes happen on the server.
+- `requireAdmin()` runs in every admin page and action. It verifies the session with Supabase Auth, then checks `AdminUser`. `src/proxy.ts` is only a convenience.
+- Row Level Security is on for every table. The public API roles can read published projects and articles and nothing else.
+- Uploads run as the signed-in admin, so Storage policies apply. File types are detected from content. The service-role key is not used.
+- Markdown is rendered without raw HTML, and unsafe link schemes are removed.
+- Public queries filter for published content. Scheduled articles appear within five minutes of their date.
 
-- **Chrome**: 60+
-- **Firefox**: 55+
-- **Safari**: 12+
-- **Edge**: 79+
-
-## 📊 Performance Features
-
-- **Image Preloading**: Critical images preloaded for faster display
-- **Throttled Events**: Scroll events optimized for 60fps
-- **Lazy Loading**: Elements animate only when visible
-- **Minimal Dependencies**: Only Font Awesome for icons
-
-## 🎯 Accessibility
-
-- **Semantic HTML**: Proper heading structure and landmarks
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Focus Indicators**: Clear focus states for interactive elements
-- **Screen Reader Friendly**: Proper ARIA labels and descriptions
-- **Color Contrast**: WCAG compliant color combinations
-
-## 🔒 Security
-
-- **Form Validation**: Client-side validation with sanitization
-- **XSS Prevention**: Safe content rendering
-- **HTTPS Ready**: Secure connection compatible
-
-## 📈 SEO Optimized
-
-- **Meta Tags**: Proper meta descriptions and titles
-- **Semantic Structure**: Meaningful HTML structure
-- **Fast Loading**: Optimized for Core Web Vitals
-- **Mobile Friendly**: Mobile-first responsive design
-
-## 🚀 Deployment
-
-### Static Hosting
-Deploy to any static hosting service:
-- **Netlify**: Drag and drop deployment
-- **Vercel**: Git-based deployment
-- **GitHub Pages**: Free hosting for GitHub repositories
-- **Firebase Hosting**: Google's hosting solution
-
-### Custom Domain
-1. Purchase a domain name
-2. Configure DNS settings
-3. Update hosting provider settings
-4. Add SSL certificate
-
-## 🛠 Development
-
-### Local Development
-1. Use a local web server (e.g., Live Server in VS Code)
-2. Open browser developer tools for debugging
-3. Test responsive design across different screen sizes
-
-### Code Organization
-- **HTML**: Semantic structure with proper accessibility
-- **CSS**: Modular CSS with custom properties
-- **JavaScript**: Modular functions with clear separation of concerns
-
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📞 Support
-
-For questions or support:
-- Create an issue in the repository
-- Check the documentation
-- Review the code comments
-
-## 🎉 Credits
-
-- **Fonts**: Inter font family from Google Fonts
-- **Icons**: Font Awesome 6
-- **Images**: Unsplash (placeholder images)
-- **Design Inspiration**: Modern web design trends
-- **Content**: Customized for Anil Rijal's portfolio
-
----
-
-**Built with ❤️ for Anil Rijal - CSIT Student & Creative Developer** 
+`public/sw.js` removes the service worker left by the previous site. Keep it for a few months after launch.

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://anilrijal.info.np/sitemap.xml

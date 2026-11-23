@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --page: #ffffff;
+  --tint: #f3f6fa;
+  --surface: #ffffff;
+  --text: #131c2c;
+  --soft: #4d5b70;
+  --line: #d8dfe8;
+  --accent: #1a5bd0;
+  --accent-strong: #1449a8;
+  --danger: #b3261e;
+  --ink: #0f1a2e;
+}
+
+.dark {
+  --page: #121d30;
+  --tint: #17243a;
+  --surface: #1a2840;
+  --text: #edf2f9;
+  --soft: #aab8cc;
+  --line: #31435f;
+  --accent: #82b1ff;
+  --accent-strong: #a9c9ff;
+  --danger: #ff9c94;
+  --ink: #0b1424;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-tint: var(--tint);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-soft: var(--soft);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-danger: var(--danger);
+  --color-ink: var(--ink);
+  /* Fixed colours for surfaces that stay dark in both themes. */
+  --color-ink-line: #2b3b57;
+  --color-ink-soft: #b3c0d4;
+  --color-ink-accent: #82b1ff;
+  --color-cobalt: #1a5bd0;
+  --color-cobalt-deep: #1449a8;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Consolas, monospace;
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 5.5rem;
+    background: var(--page);
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-page font-sans text-text antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.022em;
+    line-height: 1.12;
+  }
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  button:not(:disabled),
+  select {
+    cursor: pointer;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  /* Rendered Markdown */
+  .prose {
+    max-width: 44rem;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    overflow-wrap: break-word;
+  }
+  .prose > * + * {
+    margin-top: 1.15em;
+  }
+  .prose h1,
+  .prose h2 {
+    margin-top: 2.2em;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .prose h3 {
+    margin-top: 1.8em;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .prose > :first-child {
+    margin-top: 0;
+  }
+  .prose a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .prose ul {
+    padding-left: 1.3em;
+    list-style: disc;
+  }
+  .prose ol {
+    padding-left: 1.5em;
+    list-style: decimal;
+  }
+  .prose li + li {
+    margin-top: 0.35em;
+  }
+  .prose blockquote {
+    padding-left: 1.1em;
+    border-left: 3px solid var(--accent);
+    color: var(--soft);
+  }
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .prose hr {
+    border-color: var(--line);
+  }
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+  .prose th,
+  .prose td {
+    padding: 0.5em 0.8em;
+    border: 1px solid var(--line);
+    text-align: left;
+  }
+  .prose :not(pre) > code {
+    padding: 0.12em 0.35em;
+    border-radius: 4px;
+    background: var(--tint);
+    font-family: var(--font-mono);
+    font-size: 0.87em;
+  }
+  .prose pre,
+  .code-panel {
+    overflow-x: auto;
+    border-radius: 6px;
+    background: #0a1220;
+    color-scheme: dark;
+    color: #dbe5f3;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    line-height: 1.7;
+  }
+  .prose pre {
+    padding: 1.1rem 1.25rem;
+  }
+
+  /* highlight.js tokens, on the dark code surface */
+  .hljs-comment,
+  .hljs-quote {
+    color: #8fa0b9;
+  }
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-literal {
+    color: #8ab8ff;
+  }
+  .hljs-string,
+  .hljs-regexp,
+  .hljs-addition,
+  .hljs-meta .hljs-string {
+    color: #a5d8a7;
+  }
+  .hljs-number,
+  .hljs-built_in,
+  .hljs-symbol,
+  .hljs-attr,
+  .hljs-attribute {
+    color: #f0c58a;
+  }
+  .hljs-title,
+  .hljs-section,
+  .hljs-name,
+  .hljs-type {
+    color: #cdb6ff;
+  }
+  .hljs-deletion {
+    color: #ff9c94;
+  }
+}

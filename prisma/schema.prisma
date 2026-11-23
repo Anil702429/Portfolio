@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+}
+
+model Project {
+  id               String         @id @default(uuid()) @db.Uuid
+  title            String
+  slug             String         @unique
+  category         String         @default("")
+  shortDescription String
+  description      String
+  problem          String         @default("")
+  solution         String         @default("")
+  features         String[]       @default([])
+  /// Markdown: architecture and implementation notes.
+  content          String         @default("")
+  coverImage       String?
+  githubUrl        String?
+  liveUrl          String?
+  featured         Boolean        @default(false)
+  published        Boolean        @default(false)
+  displayOrder     Int            @default(0)
+  technologies     Technology[]
+  images           ProjectImage[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([published, displayOrder])
+  @@index([published, featured])
+}
+
+model ProjectImage {
+  id           String  @id @default(uuid()) @db.Uuid
+  url          String
+  alt          String  @default("")
+  displayOrder Int     @default(0)
+  projectId    String  @db.Uuid
+  project      Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, displayOrder])
+}
+
+model Technology {
+  id       String    @id @default(uuid()) @db.Uuid
+  name     String    @unique
+  slug     String    @unique
+  projects Project[]
+}
+
+model Post {
+  id          String     @id @default(uuid()) @db.Uuid
+  title       String
+  slug        String     @unique
+  excerpt     String
+  /// Markdown.
+  content     String
+  coverImage  String?
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+  categoryId  String?    @db.Uuid
+  category    Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags        Tag[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([status, publishedAt(sort: Desc)])
+  @@index([categoryId])
+}
+
+model Category {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String @unique
+  slug  String @unique
+  posts Post[]
+}
+
+model Tag {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String @unique
+  slug  String @unique
+  posts Post[]
+}
+
+model ContactMessage {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    MessageStatus @default(UNREAD)
+  /// HMAC of the sender's IP, used only for rate limiting.
+  ipHash    String
+  createdAt DateTime      @default(now())
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([ipHash, createdAt])
+  @@index([createdAt])
+}
+
+/// Single row (id = 1, enforced by a CHECK constraint in the migration).
+model SiteSettings {
+  id                Int      @id @default(1)
+  name              String
+  professionalTitle String
+  introduction      String
+  about             String   @default("")
+  location          String   @default("")
+  availability      String   @default("")
+  profileImage      String?
+  githubUrl         String?
+  linkedinUrl       String?
+  email             String?
+  resumeUrl         String?
+  heroSnippet       String   @default("")
+  heroSnippetLabel  String   @default("")
+  heroSnippetUrl    String?
+  updatedAt         DateTime @updatedAt
+}
+
+model SocialLink {
+  id           String @id @default(uuid()) @db.Uuid
+  label        String @unique
+  url          String
+  displayOrder Int    @default(0)
+}
+
+model SkillGroup {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String   @unique
+  skills       String[]
+  displayOrder Int      @default(0)
+}
+
+model Education {
+  id           String @id @default(uuid()) @db.Uuid
+  title        String
+  institution  String @default("")
+  period       String @default("")
+  displayOrder Int    @default(0)
+}
+
+/// Allow-list of administrators. userId is auth.users.id in Supabase.
+model AdminUser {
+  userId    String   @id @db.Uuid
+  email     String
+  createdAt DateTime @default(now())
+}
